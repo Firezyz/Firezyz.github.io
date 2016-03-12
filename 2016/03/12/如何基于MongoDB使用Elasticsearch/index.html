@@ -1,0 +1,959 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MongoDB Elasticsearch," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="写在最前原文地址：http://www.sitepoint.com/building-recipe-search-site-angular-elasticsearch/
+毕设中需要实现一个中文基于MongoDB的搜索功能，StackOverFlow淘到这篇文章，自己看的时候顺带写下来。以我自己的英语水平，谈不上翻译，这个自知之明还是有的。
+正文你是否曾经想过在程序中做一个搜索部件？在早些时间，你可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何基于MongoDB使用Elasticsearch">
+<meta property="og:url" content="http://firezyz.github.io/2016/03/12/如何基于MongoDB使用Elasticsearch/index.html">
+<meta property="og:site_name" content="卡 · 求索">
+<meta property="og:description" content="写在最前原文地址：http://www.sitepoint.com/building-recipe-search-site-angular-elasticsearch/
+毕设中需要实现一个中文基于MongoDB的搜索功能，StackOverFlow淘到这篇文章，自己看的时候顺带写下来。以我自己的英语水平，谈不上翻译，这个自知之明还是有的。
+正文你是否曾经想过在程序中做一个搜索部件？在早些时间，你可">
+<meta property="og:updated_time" content="2016-03-12T15:05:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何基于MongoDB使用Elasticsearch">
+<meta name="twitter:description" content="写在最前原文地址：http://www.sitepoint.com/building-recipe-search-site-angular-elasticsearch/
+毕设中需要实现一个中文基于MongoDB的搜索功能，StackOverFlow淘到这篇文章，自己看的时候顺带写下来。以我自己的英语水平，谈不上翻译，这个自知之明还是有的。
+正文你是否曾经想过在程序中做一个搜索部件？在早些时间，你可">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 如何基于MongoDB使用Elasticsearch | 卡 · 求索 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b5fb0967f52616474fb50f3f20f76d56";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">卡 · 求索</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吾将上下而求索</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何基于MongoDB使用Elasticsearch
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-12T19:50:28+08:00" content="2016-03-12">
+              2016-03-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/12/如何基于MongoDB使用Elasticsearch/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/如何基于MongoDB使用Elasticsearch/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h2><p>原文地址：<a href="http://www.sitepoint.com/building-recipe-search-site-angular-elasticsearch/" target="_blank" rel="external">http://www.sitepoint.com/building-recipe-search-site-angular-elasticsearch/</a></p>
+<p>毕设中需要实现一个中文基于MongoDB的搜索功能，StackOverFlow淘到这篇文章，自己看的时候顺带写下来。以我自己的英语水平，谈不上翻译，这个自知之明还是有的。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>你是否曾经想过在程序中做一个搜索部件？在早些时间，你可能会使用Solr，或者在Lucene之上封装自己的搜索服务。但是，自2010年，有一个更简单的方法：Elasticsearch(<a href="http://elasticsearch.org/" target="_blank" rel="external">http://elasticsearch.org/</a>)</p>
+<p>Elasticsearch是一个基于Lucene的开源存储引擎。它不仅仅是个搜索引擎；它实际上是一个强调搜索性能的一致性或耐久性的文件存储。这就意味着，在许多应用中，你可以使用Elasticsearch作为你的整个后端。</p>
+<a id="more"></a>
+<h2 id="建立一个食谱搜索引擎"><a href="#建立一个食谱搜索引擎" class="headerlink" title="建立一个食谱搜索引擎"></a>建立一个食谱搜索引擎</h2><p>本文中，你将学会如何使用Elasticsearch和AngularJS来创建一个食谱搜索引擎，就像 OpenRecipeSearch.com ，那为什么是食谱呢？</p>
+<ol>
+<li>已经有了OpenRecipes，我们的工作会更简单</li>
+<li>为什么不是菜谱呢？</li>
+</ol>
+<p>之所以选择菜谱，因为OpenRecipes是一个获取许多家菜谱网站的数据并能以Json下载下来的开源项目。好处在于，Elasticsearch也是使用Json。当然，在我们将菜谱数据拿下来之前，我们得先安装运行Elasticsearch。</p>
+<ul>
+<li><a href="http://www.elasticsearch.org/overview/elkdownloads/" target="_blank" rel="external">下载Elasticsearch</a> 解压。</li>
+<li>打开一个终端，<code>cd</code> 到你刚刚解压的目录，运行 <code>bin/elasticsearch</code>（Windows上是<code>bin/elasticsearch.bat</code> ）,这样你就已经启动你自己的elasticsearch程序了。</li>
+</ul>
+<p>Elasticsearch其中最好的一点是它的RESTful后端，这使得他能适用于各种环境。我们将要使用JavaScript环境，但是你可以使用 <a href="https://github.com/elasticsearch" target="_blank" rel="external">其他任何一种</a>；代码也会看起开比较简单。如果你愿意，你可以参看这个<a href="http://adambard.com/blog/elasticsearch-rosetta-stone/" target="_blank" rel="external">简要参考</a>。</p>
+<p>现在，你需要一份OpenRecipes的<a href="http://openrecip.es/" target="_blank" rel="external">数据库拷贝</a>。它其实就是一个大的JSON文件，这可以让我们很方面的写个NodeJS脚本来获取它。在这之前，你需要获取Elasticsearch包，所以运行 <code>npm install elasticsearch</code>。接下来创建一个名为<code>load_recipes.js</code>的文件，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">var es = require(&apos;elasticsearch&apos;);</span><br><span class="line">var client = new es.Client(&#123;</span><br><span class="line">  host: &apos;localhost:9200&apos;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">fs.readFile(&apos;recipeitems-latest.json&apos;, &#123;encoding: &apos;utf-8&apos;&#125;, function(err, data) &#123;</span><br><span class="line">  if (err) &#123; throw err; &#125;</span><br><span class="line"></span><br><span class="line">  // Build up a giant bulk request for elasticsearch.</span><br><span class="line">  bulk_request = data.split(&apos;\n&apos;).reduce(function(bulk_request, line) &#123;</span><br><span class="line">    var obj, recipe;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">      obj = JSON.parse(line);</span><br><span class="line">    &#125; catch(e) &#123;</span><br><span class="line">      console.log(&apos;Done reading&apos;);</span><br><span class="line">      return bulk_request;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Rework the data slightly</span><br><span class="line">    recipe = &#123;</span><br><span class="line">      id: obj._id.$oid, // Was originally a mongodb entry</span><br><span class="line">      name: obj.name,</span><br><span class="line">      source: obj.source,</span><br><span class="line">      url: obj.url,</span><br><span class="line">      recipeYield: obj.recipeYield,</span><br><span class="line">      ingredients: obj.ingredients.split(&apos;\n&apos;),</span><br><span class="line">      prepTime: obj.prepTime,</span><br><span class="line">      cookTime: obj.cookTime,</span><br><span class="line">      datePublished: obj.datePublished,</span><br><span class="line">      description: obj.description</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    bulk_request.push(&#123;index: &#123;_index: &apos;recipes&apos;, _type: &apos;recipe&apos;, _id: recipe.id&#125;&#125;);</span><br><span class="line">    bulk_request.push(recipe);</span><br><span class="line">    return bulk_request;</span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  // A little voodoo to simulate synchronous insert</span><br><span class="line">  var busy = false;</span><br><span class="line">  var callback = function(err, resp) &#123;</span><br><span class="line">    if (err) &#123; console.log(err); &#125;</span><br><span class="line"></span><br><span class="line">    busy = false;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  // Recursively whittle away at bulk_request, 1000 at a time.</span><br><span class="line">  var perhaps_insert = function()&#123;</span><br><span class="line">    if (!busy) &#123;</span><br><span class="line">      busy = true;</span><br><span class="line">      client.bulk(&#123;</span><br><span class="line">        body: bulk_request.slice(0, 1000)</span><br><span class="line">      &#125;, callback);</span><br><span class="line">      bulk_request = bulk_request.slice(1000);</span><br><span class="line">      console.log(bulk_request.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (bulk_request.length &gt; 0) &#123;</span><br><span class="line">      setTimeout(perhaps_insert, 10);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&apos;Inserted all records.&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  perhaps_insert();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后运行<code>node load_recipes.js</code>。160000记录后，我们就有一个完整的数据库的食谱了。如果你愿意，你可以使用<code>curl</code>很方便的检查一下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST http://localhost:9200/recipes/recipe/_search <span class="_">-d</span> <span class="string">'&#123;"query": &#123;"match": &#123;"_all": "cake"&#125;&#125;&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>现在，你应该是可以成功的使用<code>curl</code>来搜索菜谱了，但是如果全世界都来使用你的菜谱搜索工具，那么我们还需要….</p>
+<h2 id="建立一个菜谱搜索界面"><a href="#建立一个菜谱搜索界面" class="headerlink" title="建立一个菜谱搜索界面"></a>建立一个菜谱搜索界面</h2><p>这就是前面为什么说要使用Angular。我选择Angular有两个原因：一者是因为我想用，再者是Elasticsearch的JavaScript库提供了强大的Angular适配。我会把设计作为读者的练习，但我会告诉你的HTML的重要部分。</p>
+<p>现在集中注意力到Elasticsearch和Angular。我推荐使用Tower，但是你也可以选择直接现在它们。打开你的index.html文件，然后在你常放JavaScript的地方插入以下代码：</p>
+<pre><code>&lt;script src=&quot;path/to/angular/angular.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;path/to/elasticsearch/elasticsearch.angular.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>现在让我们先暂停一下，思考一下我们的app将要怎么运行：</p>
+<ol>
+<li>用户输入查询词。</li>
+<li>我们将查询词作为搜索内容发送给Elasticsearch。</li>
+<li>我们取回结果。</li>
+<li>然后将结果展示给用户。</li>
+</ol>
+<p>下面放的主要是我们的搜索引擎的嵌入了Angular的核心HTML代码。如果你从来没有使用过Angular也没关系。领会下面代码你只需要知道以下几点：</p>
+<ol>
+<li>HTML中以ng开头的属性就是Angular指令。</li>
+<li>在ng-app和ng-controller包裹之中的Angular指令才是有效的。ng-app和ng-controller不用放在同一个元素上，但是可以放在同一元素。</li>
+<li>HTML中所有其他值的引用变量都能在JavaScript的$scope对象中看到。</li>
+<li><p>在”{ { } }”包裹的部分是模板变量。</p>
+ <div ng-app="myOpenRecipes" ng-controller="recipeCtrl"><br> <!-- The search box puts the term into $scope.searchTerm
+        and calls $scope.search() on submit --><br>   <section class="searchField"><br>     <form ng-submit="search()"><br>       <input type="text" ng-model="searchTerm"><br>       <input type="submit" value="Search for recipes"><br>     </form><br>   </section><br> <!-- In results, we show a message if there are no results, and
+        a list of results otherwise. --><br>   <section class="results"><br>     <div class="no-recipes" ng-hide="recipes.length">No results</div>
+
+ <!-- We show one of these elements for each recipe in $scope.recipes.
+      The ng-cloak directive prevents our templates from showing on load. -->
+ <article class="recipe" ng-repeat="recipe in recipes" ng-cloak=""><br>   <h2><br>     <a ng-href=""></a><br>   </h2><br>   <ul><br>     <li ng-repeat="ingredient in recipe.ingredients"></li><br>   </ul><br><br>   <p><br>     <br>     <a ng-href="">… more at </a><br>   </p><br> </article>
+
+ <!-- We put a link that calls $scope.loadMore to load more recipes
+      and append them to the results.-->
+<p> <div class="load-more" ng-hide="allResults" ng-cloak=""><br>   <a ng-click="loadMore()">More…</a><br> </div><br> </p></section><p></p>
+</div></li>
+</ol>
+<p>现在，我们可以开始写JavaScript了。首先我们先写一个模块叫做<code>MyOpenRecipes</code>。</p>
+<pre><code>/**
+ * Create the module. Set it up to use html5 mode.
+ */
+window.MyOpenRecipes = angular.module(&apos;myOpenRecipes&apos;, [&apos;elasticsearch&apos;],
+    [&apos;$locationProvider&apos;, function($locationProvider) {
+        $locationProvider.html5Mode(true);
+    }]
+);
+</code></pre><p>对AngularJS新手来说，<code>[&#39;$locationProvider&#39;, function($locationProvider) {...}]</code>是为了告诉Angular我们需要把<code>$locationProvider</code>传到handler方法中，所以我们可以使用它。</p>
+<p>接下来，我们开始写controller，命名为<code>recipeCtrl</code>。</p>
+<pre><code>/**
+ * Create a controller to interact with the UI.
+ */
+MyOpenRecipes.controller(&apos;recipeCtrl&apos;, [&apos;recipeService&apos;, &apos;$scope&apos;, &apos;$location&apos;, function(recipes, $scope, $location) {
+  // Provide some nice initial choices
+  var initChoices = [
+      &quot;rendang&quot;,
+      &quot;nasi goreng&quot;,
+      &quot;pad thai&quot;,
+      &quot;pizza&quot;,
+      &quot;lasagne&quot;,
+      &quot;ice cream&quot;,
+      &quot;schnitzel&quot;,
+      &quot;hummous&quot;
+  ];
+  var idx = Math.floor(Math.random() * initChoices.length);
+  // Initialize the scope defaults.
+  $scope.recipes = [];        // An array of recipe results to display
+  $scope.page = 0;            // A counter to keep track of our current page
+  $scope.allResults = false;  // Whether or not all results have been found.
+  // And, a random search term to start if none was present on page load.
+  $scope.searchTerm = $location.search().q || initChoices[idx];
+  /**
+   * A fresh search. Reset the scope variables to their defaults, set
+   * the q query parameter, and load more results.
+   */
+  $scope.search = function() {
+    $scope.page = 0;
+    $scope.recipes = [];
+    $scope.allResults = false;
+    $location.search({&apos;q&apos;: $scope.searchTerm});
+    $scope.loadMore();
+  };
+  /**
+   * Load the next page of results, incrementing the page counter.
+   * When query is finished, push results onto $scope.recipes and decide
+   * whether all results have been returned (i.e. were 10 results returned?)
+   */
+  $scope.loadMore = function() {
+    recipes.search($scope.searchTerm, $scope.page++).then(function(results) {
+      if (results.length !== 10) {
+        $scope.allResults = true;
+      }
+  var ii = 0;
+  for (; ii &lt; results.length; ii++) {
+        $scope.recipes.push(results[ii]);
+      }
+    });
+  };
+  // Load results on first run
+  $scope.loadMore();
+}]);
+</code></pre><hr>
+<pre><code>MyOpenRecipes.factory(&apos;recipeService&apos;, [&apos;$q&apos;, &apos;esFactory&apos;, &apos;$location&apos;, function($q, elasticsearch, $location) {
+  var client = elasticsearch({
+    host: $location.host() + &apos;:9200&apos;
+  });
+  /**
+   * Given a term and an offset, load another round of 10 recipes.
+   *
+   * Returns a promise.
+   */
+  var search = function(term, offset) {
+    var deferred = $q.defer();
+    var query = {
+      match: {
+        _all: term
+      }
+    };
+    client.search({
+      index: &apos;recipes&apos;,
+      type: &apos;recipe&apos;,
+      body: {
+        size: 10,
+        from: (offset || 0) * 10,
+        query: query
+      }
+    }).then(function(result) {
+      var ii = 0, hits_in, hits_out = [];
+      hits_in = (result.hits || {}).hits || [];
+      for(; ii &lt; hits_in.length; ii++) {
+        hits_out.push(hits_in[ii]._source);
+      }
+      deferred.resolve(hits_out);
+    }, deferred.reject);
+    return deferred.promise;
+  };
+  // Since this is a factory method, we return an object representing the actual service.
+  return {
+    search: search
+  };
+}]);
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB-Elasticsearch/" rel="tag">#MongoDB Elasticsearch</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/11/解决ubuntu14-04-LTS误删network-manager导致网络图标消失不能上网/" rel="next" title="解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网">
+                <i class="fa fa-chevron-left"></i> 解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/12/如何基于MongoDB使用Elasticsearch/"
+           data-title="如何基于MongoDB使用Elasticsearch" data-url="http://firezyz.github.io/2016/03/12/如何基于MongoDB使用Elasticsearch/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="images/head.jpg"
+               alt="Firezyz" />
+          <p class="site-author-name" itemprop="name">Firezyz</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Firezyz/Firezyz.github.io" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3593041631" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最前"><span class="nav-number">1.</span> <span class="nav-text">写在最前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立一个食谱搜索引擎"><span class="nav-number">3.</span> <span class="nav-text">建立一个食谱搜索引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立一个菜谱搜索界面"><span class="nav-number">4.</span> <span class="nav-text">建立一个菜谱搜索界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">        </span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Firezyz</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"firezyz"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+
+</body>
+</html>
