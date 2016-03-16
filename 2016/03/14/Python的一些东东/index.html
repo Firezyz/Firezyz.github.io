@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ubuntu," />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -57,19 +57,22 @@
 
 
 
-<meta name="description" content="起因因为手贱卸载软件时误删了network namager，导致网络图标消失了，不能上网，打开系统设置&amp;gt;网络,也出现网络服务与当前网络管理器不兼容的错误，今天总算完美解决这一问题：
-方案一：首先试试这个吧：1234$cd /etc/NetworkManager/$sudo rm system-connections$sudo mkdir /system-connections$Network">
+<meta name="description" content="写在最前
+The Zen of Python, by Tim Peters
+Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated.Flat is better than nested.Sparse">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网">
-<meta property="og:url" content="http://firezyz.github.io/2016/03/11/解决ubuntu14-04-LTS误删network-manager导致网络图标消失不能上网/index.html">
+<meta property="og:title" content="Python的一些东东">
+<meta property="og:url" content="http://firezyz.github.io/2016/03/14/Python的一些东东/index.html">
 <meta property="og:site_name" content="卡 · 求索">
-<meta property="og:description" content="起因因为手贱卸载软件时误删了network namager，导致网络图标消失了，不能上网，打开系统设置&amp;gt;网络,也出现网络服务与当前网络管理器不兼容的错误，今天总算完美解决这一问题：
-方案一：首先试试这个吧：1234$cd /etc/NetworkManager/$sudo rm system-connections$sudo mkdir /system-connections$Network">
-<meta property="og:updated_time" content="2016-03-10T16:22:32.000Z">
+<meta property="og:description" content="写在最前
+The Zen of Python, by Tim Peters
+Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated.Flat is better than nested.Sparse">
+<meta property="og:updated_time" content="2016-03-16T15:40:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网">
-<meta name="twitter:description" content="起因因为手贱卸载软件时误删了network namager，导致网络图标消失了，不能上网，打开系统设置&amp;gt;网络,也出现网络服务与当前网络管理器不兼容的错误，今天总算完美解决这一问题：
-方案一：首先试试这个吧：1234$cd /etc/NetworkManager/$sudo rm system-connections$sudo mkdir /system-connections$Network">
+<meta name="twitter:title" content="Python的一些东东">
+<meta name="twitter:description" content="写在最前
+The Zen of Python, by Tim Peters
+Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated.Flat is better than nested.Sparse">
 
 
 
@@ -87,7 +90,7 @@
   };
 </script>
 
-  <title> 解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网 | 卡 · 求索 </title>
+  <title> Python的一些东东 | 卡 · 求索 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -225,7 +228,7 @@
             
             
               
-                解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网
+                Python的一些东东
               
             
           </h1>
@@ -237,8 +240,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-11T00:04:41+08:00" content="2016-03-11">
-              2016-03-11
+            <time itemprop="dateCreated" datetime="2016-03-14T21:35:55+08:00" content="2016-03-14">
+              2016-03-14
             </time>
           </span>
 
@@ -251,8 +254,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/鼓捣/" itemprop="url" rel="index">
-                    <span itemprop="name">鼓捣</span>
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
                   </a>
                 </span>
 
@@ -267,8 +270,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/11/解决ubuntu14-04-LTS误删network-manager导致网络图标消失不能上网/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/11/解决ubuntu14-04-LTS误删network-manager导致网络图标消失不能上网/" itemprop="commentsCount"></span>
+                <a href="/2016/03/14/Python的一些东东/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/14/Python的一些东东/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -290,23 +293,31 @@
       
 
       
-        <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>因为手贱卸载软件时误删了network namager，导致网络图标消失了，不能上网，打开系统设置&gt;网络,也出现网络服务与当前网络管理器不兼容的错误，今天总算完美解决这一问题：</p>
-<h2 id="方案一："><a href="#方案一：" class="headerlink" title="方案一："></a>方案一：</h2><p>首先试试这个吧：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$cd</span> /etc/NetworkManager/</span><br><span class="line"><span class="variable">$sudo</span> rm system-connections</span><br><span class="line"><span class="variable">$sudo</span> mkdir /system-connections</span><br><span class="line"><span class="variable">$NetworkManager</span></span><br></pre></td></tr></table></figure></p>
-<p>如果依次敲下以上代码就可以搞定的话，那么恭喜你，就不用往下看了；</p>
-<a id="more"></a>
-<h2 id="方案二："><a href="#方案二：" class="headerlink" title="方案二："></a>方案二：</h2><p>如果不行的话：</p>
-<h3 id="手动设置固定ip"><a href="#手动设置固定ip" class="headerlink" title="手动设置固定ip"></a>手动设置固定ip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> gedit /etc/network/interfaces （在最后添加以下，括号内容不用加）</span><br><span class="line"></span><br><span class="line">auto eth0（这是你的网卡，有可能是eth1） </span><br><span class="line">iface eth0 inet static </span><br><span class="line">address 192.168.1.5 （你的ip）</span><br><span class="line">netmask 255.255.255.0 （你的子网掩码）</span><br><span class="line">gateway 192.168.1.1（你的网关）</span><br></pre></td></tr></table></figure>
-<p>保存，重启吧</p>
-<h3 id="设置DNS"><a href="#设置DNS" class="headerlink" title="设置DNS"></a>设置DNS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> gedit /etc/resolv.conf</span><br></pre></td></tr></table></figure>
-<p>你会注意到该文件有这么一句话：</p>
-<blockquote>
-<p>#DO NOT EDIT THIS FILE BY HAND – YOUR CHANGES WILL BE OVERWRITTEN</p>
+        <h2 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h2><blockquote>
+<p>The Zen of Python, by Tim Peters</p>
+<p>Beautiful is better than ugly.<br>Explicit is better than implicit.<br>Simple is better than complex.<br>Complex is better than complicated.<br>Flat is better than nested.<br>Sparse is better than dense.<br>Readability counts.<br>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.<br>Errors should never pass silently.<br>Unless explicitly silenced.<br>In the face of ambiguity, refuse the temptation to guess.<br>There should be one– and preferably only one –obvious<br>way to do it.<br>Although that way may not be obvious at first unless you’re Dutch.<br>Now is better than never.<br>Although never is often better than <em>right</em> now.<br>If the implementation is hard to explain, it’s a bad idea.<br>If the implementation is easy to explain, it may be a good idea.<br>Namespaces are one honking great idea – let’s do more of those!</p>
 </blockquote>
-<p>就是说你手动该会被覆盖，先不管他<br>在文件结束加上<br>nameserver 192.168.0.1（你的DNS）<br>保存，记住不要重启，一旦重启，就会被重写。<br>然后不出意外，你已经可以上网了，虽然右上角还是没有图标，但是已经可以打开网页了</p>
-<h3 id="安装network-manager"><a href="#安装network-manager" class="headerlink" title="安装network manager"></a>安装network manager</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get install network-manager</span><br></pre></td></tr></table></figure>
-<h3 id="重启即可看到网络图标"><a href="#重启即可看到网络图标" class="headerlink" title="重启即可看到网络图标"></a>重启即可看到网络图标</h3><p>然后将1步骤中添加的内容删除，通过网络图标设置你的网络即可（不删也不要紧，只是网络管理器里显示你的网卡是托管状态）</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果你在此教程中出现其他问题：<br>移步：<br><a href="http://forum.ubuntu.com.cn/viewtopic.php?p=1869836" target="_blank" rel="external">http://forum.ubuntu.com.cn/viewtopic.php?p=1869836</a></p>
-<p><a href="http://blog.csdn.net/qwer790111/article/details/8614724" target="_blank" rel="external">http://blog.csdn.net/qwer790111/article/details/8614724</a></p>
+<a id="more"></a>
+<p>主要放一些Python的一些零零碎碎的东西。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="字符串去空"><a href="#字符串去空" class="headerlink" title="字符串去空"></a>字符串去空</h3><blockquote>
+<ol>
+<li>your_str.replace(‘ ‘,’’)</li>
+<li>‘’.join(your_str.split())</li>
+<li>使用正则表达式</li>
+</ol>
+</blockquote>
+<h3 id="发送GET、POST请求"><a href="#发送GET、POST请求" class="headerlink" title="发送GET、POST请求"></a>发送GET、POST请求</h3><h4 id="urllib："><a href="#urllib：" class="headerlink" title="urllib："></a>urllib：</h4><p>GET<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">f=urllib.urlopen(<span class="string">"http://m.cnblogs.com/"</span>)</span><br><span class="line">s=f.read()</span><br><span class="line"><span class="keyword">print</span> s</span><br></pre></td></tr></table></figure></p>
+<p>（带参数）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">params = urllib.urlencode(&#123;<span class="string">'id'</span>: <span class="number">8</span>, <span class="string">'name'</span>: <span class="string">'jack'</span>, <span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">f = urllib.urlopen(<span class="string">"http://localhost:18797/MailClient/test.aspx?%s"</span> % params)</span><br><span class="line"><span class="keyword">print</span> f.read()</span><br></pre></td></tr></table></figure></p>
+<p>POST<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">params = urllib.urlencode(&#123;<span class="string">'id'</span>: <span class="number">8</span>, <span class="string">'name'</span>: <span class="string">'jack'</span>, <span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">f = urllib.urlopen(<span class="string">"http://localhost:18797/MailClient/test.aspx"</span>,params)</span><br><span class="line"><span class="keyword">print</span> f.read()</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">response = urllib2.urlopen(<span class="string">'http://python.org/'</span>) </span><br><span class="line">html = response.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">req = urllib2.Request(<span class="string">'http://www.pythontab.com'</span>) </span><br><span class="line">response = urllib2.urlopen(req) </span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">url = <span class="string">'http://www.pythontab.com'</span> </span><br><span class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>, </span><br><span class="line">          <span class="string">'location'</span> : <span class="string">'pythontab'</span>, </span><br><span class="line">          <span class="string">'language'</span> : <span class="string">'Python'</span> &#125; </span><br><span class="line">data = urllib.urlencode(values) </span><br><span class="line">req = urllib2.Request(url, data) </span><br><span class="line">response = urllib2.urlopen(req) </span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line">data = &#123;&#125; </span><br><span class="line">data[<span class="string">'name'</span>] = <span class="string">'Somebody Here'</span> </span><br><span class="line">data[<span class="string">'location'</span>] = <span class="string">'pythontab'</span> </span><br><span class="line">data[<span class="string">'language'</span>] = <span class="string">'Python'</span> </span><br><span class="line">url_values = urllib.urlencode(data) </span><br><span class="line"><span class="keyword">print</span> url_values </span><br><span class="line">name=blueelwang+Here&amp;language=Python&amp;location=pythontab </span><br><span class="line">url = <span class="string">'http://www.pythontab.com'</span> </span><br><span class="line">full_url = url + <span class="string">'?'</span> + url_values </span><br><span class="line">data = urllib2.open(full_url)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">url = <span class="string">'http://www.pythontab.com'</span> </span><br><span class="line">user_agent = <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span>   </span><br><span class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>, </span><br><span class="line">          <span class="string">'location'</span> : <span class="string">'pythontab'</span>, </span><br><span class="line">          <span class="string">'language'</span> : <span class="string">'Python'</span> &#125; </span><br><span class="line">headers = &#123; <span class="string">'User-Agent'</span> : user_agent &#125; </span><br><span class="line">data = urllib.urlencode(values) </span><br><span class="line">req = urllib2.Request(url, data, headers) </span><br><span class="line">response = urllib2.urlopen(req) </span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">req = urllib2.Request(<span class="string">'http://www.pythontab.com'</span>) </span><br><span class="line"><span class="keyword">try</span>: </span><br><span class="line">    urllib2.urlopen(req) </span><br><span class="line"><span class="keyword">except</span> URLError, e: </span><br><span class="line">    <span class="keyword">print</span> e.reason</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">req = urllib2.Request(<span class="string">'http://www.python.org/fish.html'</span>) </span><br><span class="line"><span class="keyword">try</span>: </span><br><span class="line">    urllib2.urlopen(req) </span><br><span class="line"><span class="keyword">except</span> URLError, e: </span><br><span class="line">    <span class="keyword">print</span> e.code </span><br><span class="line">    <span class="keyword">print</span> e.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from urllib2 import Request, urlopen, URLError, HTTPError </span><br><span class="line">req = Request(someurl) </span><br><span class="line">try: </span><br><span class="line">    response = urlopen(req) </span><br><span class="line">except HTTPError, e: </span><br><span class="line">    print 'The server couldn/'t fulfill the request.' </span><br><span class="line">    print 'Error code: ', e.code </span><br><span class="line">except URLError, e: </span><br><span class="line">    print 'We failed to reach a server.' </span><br><span class="line">    print 'Reason: ', e.reason </span><br><span class="line">else: </span><br><span class="line">    # everything is fine</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from urllib2 import Request, urlopen, URLError </span><br><span class="line">req = Request(someurl) </span><br><span class="line">try: </span><br><span class="line">    response = urlopen(req) </span><br><span class="line">except URLError, e: </span><br><span class="line">    if hasattr(e, 'reason'): </span><br><span class="line">        print 'We failed to reach a server.' </span><br><span class="line">        print 'Reason: ', e.reason </span><br><span class="line">    elif hasattr(e, 'code'): </span><br><span class="line">        print 'The server couldn/'t fulfill the request.' </span><br><span class="line">        print 'Error code: ', e.code </span><br><span class="line">else: </span><br><span class="line">    # everything is fine</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -321,7 +332,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ubuntu/" rel="tag">#ubuntu</a>
+            <a href="/tags/Python/" rel="tag">#Python</a>
           
         </div>
       
@@ -330,16 +341,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/10/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2016/03/12/如何基于MongoDB使用Elasticsearch/" rel="next" title="如何基于MongoDB使用Elasticsearch">
+                <i class="fa fa-chevron-left"></i> 如何基于MongoDB使用Elasticsearch
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/12/如何基于MongoDB使用Elasticsearch/" rel="prev" title="如何基于MongoDB使用Elasticsearch">
-                如何基于MongoDB使用Elasticsearch <i class="fa fa-chevron-right"></i>
+              <a href="/2016/03/16/2016随手记/" rel="prev" title="2016随手记">
+                2016随手记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -404,8 +415,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/11/解决ubuntu14-04-LTS误删network-manager导致网络图标消失不能上网/"
-           data-title="解决ubuntu14.04 LTS误删network manager导致网络图标消失不能上网" data-url="http://firezyz.github.io/2016/03/11/解决ubuntu14-04-LTS误删network-manager导致网络图标消失不能上网/">
+      <div class="ds-thread" data-thread-key="2016/03/14/Python的一些东东/"
+           data-title="Python的一些东东" data-url="http://firezyz.github.io/2016/03/14/Python的一些东东/">
       </div>
     
   </div>
@@ -518,7 +529,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#起因"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案一："><span class="nav-number">2.</span> <span class="nav-text">方案一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案二："><span class="nav-number">3.</span> <span class="nav-text">方案二：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#手动设置固定ip"><span class="nav-number">3.1.</span> <span class="nav-text">手动设置固定ip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置DNS"><span class="nav-number">3.2.</span> <span class="nav-text">设置DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装network-manager"><span class="nav-number">3.3.</span> <span class="nav-text">安装network manager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启即可看到网络图标"><span class="nav-number">3.4.</span> <span class="nav-text">重启即可看到网络图标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最前"><span class="nav-number">1.</span> <span class="nav-text">写在最前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串去空"><span class="nav-number">2.1.</span> <span class="nav-text">字符串去空</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送GET、POST请求"><span class="nav-number">2.2.</span> <span class="nav-text">发送GET、POST请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#urllib："><span class="nav-number">2.2.1.</span> <span class="nav-text">urllib：</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
