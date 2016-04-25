@@ -1,0 +1,916 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="nodejs,EventProxy,转发," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="这个世界上不存在所谓回调函数深度嵌套的问题。 —— Jackson Tian世界上本没有嵌套回调，写得人多了，也便有了} } } } } } } } } } } }。—— fengmk2
+
+原文链接
+正文EventProxy 仅仅是一个很轻量的工具，但是能够带来一种事件式编程的思维变化。有几个特点：
+
+利用事件机制解耦复杂业务逻辑
+移除被广为诟病的深度callback嵌套问题
+将串行等待变成并行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs中的EventProxy小结">
+<meta property="og:url" content="http://firezyz.github.io/2016/03/24/nodejs中的EventProxy小结/index.html">
+<meta property="og:site_name" content="卡 · 求索">
+<meta property="og:description" content="这个世界上不存在所谓回调函数深度嵌套的问题。 —— Jackson Tian世界上本没有嵌套回调，写得人多了，也便有了} } } } } } } } } } } }。—— fengmk2
+
+原文链接
+正文EventProxy 仅仅是一个很轻量的工具，但是能够带来一种事件式编程的思维变化。有几个特点：
+
+利用事件机制解耦复杂业务逻辑
+移除被广为诟病的深度callback嵌套问题
+将串行等待变成并行">
+<meta property="og:updated_time" content="2016-04-25T03:49:41.693Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nodejs中的EventProxy小结">
+<meta name="twitter:description" content="这个世界上不存在所谓回调函数深度嵌套的问题。 —— Jackson Tian世界上本没有嵌套回调，写得人多了，也便有了} } } } } } } } } } } }。—— fengmk2
+
+原文链接
+正文EventProxy 仅仅是一个很轻量的工具，但是能够带来一种事件式编程的思维变化。有几个特点：
+
+利用事件机制解耦复杂业务逻辑
+移除被广为诟病的深度callback嵌套问题
+将串行等待变成并行">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> nodejs中的EventProxy小结 | 卡 · 求索 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b5fb0967f52616474fb50f3f20f76d56";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">卡 · 求索</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吾将上下而求索</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                nodejs中的EventProxy小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-24T12:20:35+08:00" content="2016-03-24">
+              2016-03-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/24/nodejs中的EventProxy小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/24/nodejs中的EventProxy小结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>这个世界上不存在所谓回调函数深度嵌套的问题。 —— Jackson Tian<br>世界上本没有嵌套回调，写得人多了，也便有了} } } } } } } } } } } }。—— fengmk2</p>
+</blockquote>
+<p><a href="https://www.npmjs.com/package/eventproxy" target="_blank" rel="external">原文链接</a></p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>EventProxy 仅仅是一个很轻量的工具，但是能够带来一种事件式编程的思维变化。有几个特点：</p>
+<ol>
+<li>利用事件机制解耦复杂业务逻辑</li>
+<li>移除被广为诟病的深度callback嵌套问题</li>
+<li>将串行等待变成并行等待，提升多异步协作场景下的执行效率</li>
+<li>友好的Error handling</li>
+<li>无平台依赖，适合前后端，能用于浏览器和Node.js</li>
+<li>兼容CMD，AMD以及CommonJS模块环境</li>
+<li>现在的，无深度嵌套的，并行的</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = EventProxy.create(<span class="string">"template"</span>, <span class="string">"data"</span>, <span class="string">"l10n"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">template, data, l10n</span>) </span>&#123;</span><br><span class="line">  _.template(template, data, l10n);</span><br><span class="line">&#125;);</span><br><span class="line">$.get(<span class="string">"template"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">template</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// something </span></span><br><span class="line">  ep.emit(<span class="string">"template"</span>, template);</span><br><span class="line">&#125;);</span><br><span class="line">$.get(<span class="string">"data"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// something </span></span><br><span class="line">  ep.emit(<span class="string">"data"</span>, data);</span><br><span class="line">&#125;);</span><br><span class="line">$.get(<span class="string">"l10n"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">l10n</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// something </span></span><br><span class="line">  ep.emit(<span class="string">"l10n"</span>, l10n);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>过去的，深度嵌套的，串行的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> render = <span class="function"><span class="keyword">function</span> (<span class="params">template, data</span>) </span>&#123;</span><br><span class="line">  _.template(template, data);</span><br><span class="line">&#125;;</span><br><span class="line">$.get(<span class="string">"template"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">template</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// something </span></span><br><span class="line">  $.get(<span class="string">"data"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// something </span></span><br><span class="line">    $.get(<span class="string">"l10n"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">l10n</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// something </span></span><br><span class="line">      render(template, data, l10n);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Node用户"><a href="#Node用户" class="headerlink" title="Node用户"></a>Node用户</h3><p>通过NPM安装即可使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install eventproxy</span><br></pre></td></tr></table></figure>
+<p>调用:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> EventProxy = <span class="built_in">require</span>(<span class="string">'eventproxy'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="spm"><a href="#spm" class="headerlink" title="spm"></a>spm</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ spm install eventproxy</span><br></pre></td></tr></table></figure>
+<h3 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ component install JacksonTian/eventproxy</span><br></pre></td></tr></table></figure>
+<h3 id="前端用户"><a href="#前端用户" class="headerlink" title="前端用户"></a>前端用户</h3><p>以下示例均指向Github的源文件地址，您也可以<a href="https://raw.github.com/JacksonTian/eventproxy/master/lib/eventproxy.js" target="_blank" rel="external">下载源文件</a>到你自己的项目中。整个文件注释全面，带注释和空行，一共约500行。为保证EventProxy的易嵌入，项目暂不提供压缩版。用户可以自行采用Uglify、YUI Compressor或Google Closure Complier进行压缩。</p>
+<h3 id="普通环境"><a href="#普通环境" class="headerlink" title="普通环境"></a>普通环境</h3><p>在页面中嵌入脚本即可使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://raw.github.com/JacksonTian/eventproxy/master/lib/eventproxy.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// EventProxy此时是一个全局变量 </span></span><br><span class="line"><span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br></pre></td></tr></table></figure>
+<h3 id="SeaJS用户"><a href="#SeaJS用户" class="headerlink" title="SeaJS用户"></a>SeaJS用户</h3><p>SeaJS下只需配置别名，然后require引用即可使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置 </span></span><br><span class="line">seajs.config(&#123;</span><br><span class="line">  alias: &#123;</span><br><span class="line">    eventproxy: <span class="string">'https://raw.github.com/JacksonTian/eventproxy/master/lib/eventproxy.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 使用 </span></span><br><span class="line">seajs.use([<span class="string">'eventproxy'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">EventProxy</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// TODO </span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 或者 </span></span><br><span class="line">define(<span class="string">'test'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">require, exports, modules</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> EventProxy = <span class="built_in">require</span>(<span class="string">'eventproxy'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="RequireJS用户"><a href="#RequireJS用户" class="headerlink" title="RequireJS用户"></a>RequireJS用户</h3><p>RequireJS实现的是AMD规范。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置路径 </span></span><br><span class="line"><span class="built_in">require</span>.config(&#123;</span><br><span class="line">  paths: &#123;</span><br><span class="line">    eventproxy: <span class="string">"https://raw.github.com/JacksonTian/eventproxy/master/lib/eventproxy"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 使用 </span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">"eventproxy"</span>], <span class="function"><span class="keyword">function</span> (<span class="params">EventProxy</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// TODO </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="异步协作"><a href="#异步协作" class="headerlink" title="异步协作"></a>异步协作</h2><h3 id="多类型异步协作"><a href="#多类型异步协作" class="headerlink" title="多类型异步协作"></a>多类型异步协作</h3><p>此处以页面渲染为场景，渲染页面需要模板、数据。假设都需要异步读取。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">ep.all(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123; <span class="comment">// or ep.all(['tpl', 'data'], function (tpl, data) &#123;&#125;) </span></span><br><span class="line">  <span class="comment">// 在所有指定的事件触发后，将会被调用执行 </span></span><br><span class="line">  <span class="comment">// 参数对应各自的事件名 </span></span><br><span class="line">&#125;);</span><br><span class="line">fs.readFile(<span class="string">'template.tpl'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">  ep.emit(<span class="string">'tpl'</span>, content);</span><br><span class="line">&#125;);</span><br><span class="line">db.get(<span class="string">'some sql'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  ep.emit(<span class="string">'data'</span>, result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>all</code>方法将handler注册到事件组合上。当注册的多个事件都触发后，将会调用handler执行，每个事件传递的数据，将会依照事件名顺序，传入handler作为参数。</p>
+<h3 id="快速创建"><a href="#快速创建" class="headerlink" title="快速创建"></a>快速创建</h3><p>EventProxy提供了create静态方法，可以快速完成注册all事件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = EventProxy.create(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// TODO </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>以上方法等效于</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">ep.all(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// TODO </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="重复异步协作"><a href="#重复异步协作" class="headerlink" title="重复异步协作"></a>重复异步协作</h3><p>此处以读取目录下的所有文件为例，在异步操作中，我们需要在所有异步调用结束后，执行某些操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">ep.after(<span class="string">'got_file'</span>, files.length, <span class="function"><span class="keyword">function</span> (<span class="params">list</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 在所有文件的异步执行结束后将被执行 </span></span><br><span class="line">  <span class="comment">// 所有文件的内容都存在list数组中 </span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; files.length; i++) &#123;</span><br><span class="line">  fs.readFile(files[i], <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 触发结果事件 </span></span><br><span class="line">    ep.emit(<span class="string">'got_file'</span>, content);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>after</code>方法适合重复的操作，比如读取10个文件，调用5次数据库等。将handler注册到N次相同事件的触发上。达到指定的触发数，handler将会被调用执行，每次触发的数据，将会按触发顺序，存为数组作为参数传入。</p>
+<h3 id="持续型异步协作"><a href="#持续型异步协作" class="headerlink" title="持续型异步协作"></a>持续型异步协作</h3><p>此处以股票为例，数据和模板都是异步获取，但是数据会持续刷新，视图会需要重新刷新。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">ep.tail(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 在所有指定的事件触发后，将会被调用执行 </span></span><br><span class="line">  <span class="comment">// 参数对应各自的事件名的最新数据 </span></span><br><span class="line">&#125;);</span><br><span class="line">fs.readFile(<span class="string">'template.tpl'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">  ep.emit(<span class="string">'tpl'</span>, content);</span><br><span class="line">&#125;);</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  db.get(<span class="string">'some sql'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    ep.emit(<span class="string">'data'</span>, result);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
+<p><code>tail</code>与<code>all</code>方法比较类似，都是注册到事件组合上。不同在于，指定事件都触发之后，如果事件依旧持续触发，将会在每次触发时调用handler，极像一条尾巴。</p>
+<h2 id="基本事件"><a href="#基本事件" class="headerlink" title="基本事件"></a>基本事件</h2><p>通过事件实现异步协作是EventProxy的主要亮点。除此之外，它还是一个基本的事件库。携带如下基本API</p>
+<p><code>on/addListener</code>，绑定事件监听器<br><code>emit</code>，触发事件<br><code>once</code>，绑定只执行一次的事件监听器<br><code>removeListener</code>，移除事件的监听器<br><code>removeAllListeners</code>，移除单个事件或者所有事件的监听器</p>
+<p>为了照顾各个环境的开发者，上面的方法多具有别名。</p>
+<ol>
+<li>YUI3使用者，<code>subscribe</code>和<code>fire</code>你应该知道分别对应的是<code>on/addListener</code>和<code>emit</code>。</li>
+<li>jQuery使用者，<code>trigger</code>对应的方法是<code>emit</code>，<code>bind</code>对应的就是<code>on/addListener</code>。</li>
+<li><code>removeListener</code>和<code>removeAllListeners</code>其实都可以通过别名<code>unbind</code>完成。</li>
+</ol>
+<p>所以在你的环境下，选用你喜欢的API即可。</p>
+<p>更多API的描述请访问<a href="http://html5ify.com/eventproxy/api.html" target="_blank" rel="external">API Docs</a>。</p>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>在异步方法中，实际上，异常处理需要占用一定比例的精力。在过去一段时间内，我们都是通过额外添加error事件来进行处理的，代码大致如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">exports.getContent = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line"> <span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">  ep.all(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 成功回调 </span></span><br><span class="line">    callback(<span class="literal">null</span>, &#123;</span><br><span class="line">      template: tpl,</span><br><span class="line">      data: data</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 侦听error事件 </span></span><br><span class="line">  ep.bind(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 卸载掉所有handler </span></span><br><span class="line">    ep.unbind();</span><br><span class="line">    <span class="comment">// 异常回调 </span></span><br><span class="line">    callback(err);</span><br><span class="line">  &#125;);</span><br><span class="line">  fs.readFile(<span class="string">'template.tpl'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 一旦发生异常，一律交给error事件的handler处理 </span></span><br><span class="line">      <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">    &#125;</span><br><span class="line">    ep.emit(<span class="string">'tpl'</span>, content);</span><br><span class="line">  &#125;);</span><br><span class="line">  db.get(<span class="string">'some sql'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 一旦发生异常，一律交给error事件的handler处理 </span></span><br><span class="line">      <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">    &#125;</span><br><span class="line">    ep.emit(<span class="string">'data'</span>, result);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>代码量因为异常的处理，一下子上去了很多。在这里EventProxy经过很多实践后，我们根据我们的最佳实践提供了优化的错误处理方案。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">exports.getContent = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line"> <span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">  ep.all(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 成功回调 </span></span><br><span class="line">    callback(<span class="literal">null</span>, &#123;</span><br><span class="line">      template: tpl,</span><br><span class="line">      data: data</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 添加error handler </span></span><br><span class="line">  ep.fail(callback); </span><br><span class="line">  fs.readFile(<span class="string">'template.tpl'</span>, <span class="string">'utf-8'</span>, ep.done(<span class="string">'tpl'</span>));</span><br><span class="line">  db.get(<span class="string">'some sql'</span>, ep.done(<span class="string">'data'</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>上述代码优化之后，业务开发者几乎不用关心异常处理了。代码量降低效果明显。 这里代码的转换，也许有开发者并不放心。其实秘诀在fail方法和done方法中。</p>
+<h2 id="神奇的fail"><a href="#神奇的fail" class="headerlink" title="神奇的fail"></a>神奇的fail</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ep.fail(callback);</span><br><span class="line"><span class="comment">// 由于参数位相同，它实际是 </span></span><br><span class="line">ep.fail(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  callback(err);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 等价于 </span></span><br><span class="line">ep.bind(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 卸载掉所有handler </span></span><br><span class="line">  ep.unbind();</span><br><span class="line">  <span class="comment">// 异常回调 </span></span><br><span class="line">  callback(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>fail方法侦听了error事件，默认处理卸载掉所有handler，并调用回调函数。</p>
+<h2 id="神奇的-throw"><a href="#神奇的-throw" class="headerlink" title="神奇的 throw"></a>神奇的 throw</h2><p><code>throw</code> 是 <code>ep.emit(&#39;error&#39;, err)</code> 的简写。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>();</span><br><span class="line">ep.throw(err);</span><br><span class="line"><span class="comment">// 实际是 </span></span><br><span class="line">ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">神奇的done</span><br><span class="line">ep.done(<span class="string">'tpl'</span>);</span><br><span class="line"><span class="comment">// 等价于 </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="comment">// 一旦发生异常，一律交给error事件的handler处理 </span></span><br><span class="line">    <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  ep.emit(<span class="string">'tpl'</span>, content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Node的最佳实践中，回调函数第一个参数一定会是一个error对象。检测到异常后，将会触发error事件。剩下的参数，将触发事件，传递给对应handler处理。</p>
+<h2 id="done也接受回调函数"><a href="#done也接受回调函数" class="headerlink" title="done也接受回调函数"></a>done也接受回调函数</h2><p>done方法除了接受事件名外，还接受回调函数。如果是函数时，它将剔除第一个error对象(此时为null)后剩余的参数，传递给该回调函数作为参数。该回调函数无需考虑异常处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">content</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 这里无需考虑异常 </span></span><br><span class="line">  <span class="comment">// 手工emit </span></span><br><span class="line">  ep.emit(<span class="string">'someevent'</span>, newcontent);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>当然手工emit的方式并不太好，我们更进一步的版本：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ep.done(<span class="string">'tpl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 将内容更改后，返回即可 </span></span><br><span class="line">  <span class="keyword">return</span> tpl.trim();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>如果emit需要传递多个参数时，ep.done(event, fn)的方式不能满足需求，还是需要ep.done(fn)，进行手工emit多个参数。</p>
+<h2 id="神奇的group"><a href="#神奇的group" class="headerlink" title="神奇的group"></a>神奇的group</h2><p>fail除了用于协助all方法完成外，也能协助after中的异常处理。另外，在after的回调函数中，结果顺序是与用户emit的顺序有关。为了满足返回数据按发起异步调用的顺序排列，EventProxy提供了group方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">ep.after(<span class="string">'got_file'</span>, files.length, <span class="function"><span class="keyword">function</span> (<span class="params">list</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 在所有文件的异步执行结束后将被执行 </span></span><br><span class="line">  <span class="comment">// 所有文件的内容都存在list数组中，按顺序排列 </span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; files.length; i++) &#123;</span><br><span class="line">  fs.readFile(files[i], <span class="string">'utf-8'</span>, ep.group(<span class="string">'got_file'</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>group秉承done函数的设计，它包含异常的传递。同时它还隐含了对返回数据进行编号，在结束时，按顺序返回。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ep.group(<span class="string">'got_file'</span>);</span><br><span class="line"><span class="comment">// 约等价于 </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  ep.emit(<span class="string">'got_file'</span>, data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>当回调函数的数据还需要进行加工时，可以给group带上回调函数，只要在操作后将数据返回即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ep.group(<span class="string">'got_file'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// some code </span></span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="异步事件触发-emitLater-amp-amp-doneLater"><a href="#异步事件触发-emitLater-amp-amp-doneLater" class="headerlink" title="异步事件触发: emitLater &amp;&amp; doneLater"></a>异步事件触发: emitLater &amp;&amp; doneLater</h2><p>在node中，emit方法是同步的，EventProxy中的emit，trigger等跟node的风格一致，也是同步的。看下面这段代码，可能眼尖的同学一下就发现了隐藏的bug:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = EventProxy.create(); </span><br><span class="line">db.check(<span class="string">'key'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, permission</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  ep.emit(<span class="string">'check'</span>, permission);</span><br><span class="line">&#125;);</span><br><span class="line">ep.once(<span class="string">'check'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">permission</span>) </span>&#123;</span><br><span class="line">  permission &amp;&amp; db.get(<span class="string">'key'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ep.emit(<span class="string">'get'</span>, data);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">ep.once(<span class="string">'get'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    retern ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  render(data);</span><br><span class="line">&#125;);</span><br><span class="line">ep.on(<span class="string">'error'</span>, errorHandler);</span><br></pre></td></tr></table></figure>
+<p>没错，万一db.check的callback被同步执行了，在ep监听check事件之前，它就已经被抛出来了，后续逻辑没办法继续执行。尽管node的约定是所有的callback都是需要异步返回的，但是如果这个方法是由第三方提供的，我们没有办法保证db.check的callback一定会异步执行，所以我们的代码通常就变成了这样:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = EventProxy.create();</span><br><span class="line">ep.once(<span class="string">'check'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">permission</span>) </span>&#123;</span><br><span class="line">  permission &amp;&amp; db.get(<span class="string">'key'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ep.emit(<span class="string">'get'</span>, data);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">ep.once(<span class="string">'get'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    retern ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  render(data);</span><br><span class="line">&#125;);</span><br><span class="line">ep.on(<span class="string">'error'</span>, errorHandler);</span><br><span class="line">db.check(<span class="string">'key'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, permission</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  ep.emit(<span class="string">'check'</span>, permission);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们被迫把db.check挪到最后，保证事件先被监听，再执行db.check。check-&gt;get-&gt;render的逻辑，在代码中看起来变成了get-&gt;render-&gt;check。如果整个逻辑更加复杂，这种风格将会让代码很难读懂。</p>
+<p>这时候，我们需要的就是 异步事件触发：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = EventProxy.create();</span><br><span class="line">db.check(<span class="string">'key'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, permission</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> ep.emitLater(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  ep.emitLater(<span class="string">'check'</span>, permission);</span><br><span class="line">&#125;);</span><br><span class="line">ep.once(<span class="string">'check'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">permission</span>) </span>&#123;</span><br><span class="line">  permission &amp;&amp; db.get(<span class="string">'key'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ep.emit(<span class="string">'get'</span>, data);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">ep.once(<span class="string">'get'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    retern ep.emit(<span class="string">'error'</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">  render(data);</span><br><span class="line">&#125;);</span><br><span class="line">ep.on(<span class="string">'error'</span>, errorHandler);</span><br></pre></td></tr></table></figure>
+<p>上面代码中，我们把db.check的回调函数中的事件通过emitLater触发，这样,就算db.check的回调函数被同步执行了，事件的触发也还是异步的，ep在当前事件循环中监听了所有的事件，之后的事件循环中才去触发check事件。代码顺序将和逻辑顺序保持一致。 当然，这么复杂的代码，必须可以像ep.done()一样通过doneLater来解决：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ep = EventProxy.create();</span><br><span class="line">db.check(<span class="string">'key'</span>, ep.doneLater(<span class="string">'check'</span>));</span><br><span class="line">ep.once(<span class="string">'check'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">permission</span>) </span>&#123;</span><br><span class="line">  permission &amp;&amp; db.get(<span class="string">'key'</span>, ep.done(<span class="string">'get'</span>));</span><br><span class="line">&#125;);</span><br><span class="line">ep.once(<span class="string">'get'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  render(data);</span><br><span class="line">&#125;);</span><br><span class="line">ep.fail(errorHandler);</span><br></pre></td></tr></table></figure>
+<p>最终呈现出来的，是一段简洁且清晰的代码。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/EventProxy/" rel="tag">#EventProxy</a>
+          
+            <a href="/tags/转发/" rel="tag">#转发</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/16/2016随手记/" rel="next" title="2016随手记">
+                <i class="fa fa-chevron-left"></i> 2016随手记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/25/我是一个线程/" rel="prev" title="我是一个线程">
+                我是一个线程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/24/nodejs中的EventProxy小结/"
+           data-title="nodejs中的EventProxy小结" data-url="http://firezyz.github.io/2016/03/24/nodejs中的EventProxy小结/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="images/head.jpg"
+               alt="Firezyz" />
+          <p class="site-author-name" itemprop="name">Firezyz</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Firezyz/Firezyz.github.io" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3593041631" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node用户"><span class="nav-number">2.1.</span> <span class="nav-text">Node用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spm"><span class="nav-number">2.2.</span> <span class="nav-text">spm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Component"><span class="nav-number">2.3.</span> <span class="nav-text">Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端用户"><span class="nav-number">2.4.</span> <span class="nav-text">前端用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#普通环境"><span class="nav-number">2.5.</span> <span class="nav-text">普通环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SeaJS用户"><span class="nav-number">2.6.</span> <span class="nav-text">SeaJS用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RequireJS用户"><span class="nav-number">2.7.</span> <span class="nav-text">RequireJS用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步协作"><span class="nav-number">3.</span> <span class="nav-text">异步协作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多类型异步协作"><span class="nav-number">3.1.</span> <span class="nav-text">多类型异步协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速创建"><span class="nav-number">3.2.</span> <span class="nav-text">快速创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复异步协作"><span class="nav-number">3.3.</span> <span class="nav-text">重复异步协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续型异步协作"><span class="nav-number">3.4.</span> <span class="nav-text">持续型异步协作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本事件"><span class="nav-number">4.</span> <span class="nav-text">基本事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">5.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神奇的fail"><span class="nav-number">6.</span> <span class="nav-text">神奇的fail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神奇的-throw"><span class="nav-number">7.</span> <span class="nav-text">神奇的 throw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#done也接受回调函数"><span class="nav-number">8.</span> <span class="nav-text">done也接受回调函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">8.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神奇的group"><span class="nav-number">9.</span> <span class="nav-text">神奇的group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步事件触发-emitLater-amp-amp-doneLater"><span class="nav-number">10.</span> <span class="nav-text">异步事件触发: emitLater && doneLater</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Firezyz</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"firezyz"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+
+</body>
+</html>
