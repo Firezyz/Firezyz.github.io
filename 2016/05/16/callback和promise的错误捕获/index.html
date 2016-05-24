@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Python," />
+  <meta name="keywords" content="callback,promise,异常捕获," />
 
 
 
@@ -57,22 +57,16 @@
 
 
 
-<meta name="description" content="写在最前
-The Zen of Python, by Tim Peters
-Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated.Flat is better than nested.Sparse">
+<meta name="description" content="callback：1234567891011121314151617181920212223242526272829303132333435&apos;use strict&apos;;function callbackAfter3s(callback)&amp;#123;	setTimeout(function()&amp;#123;        try&amp;#123;			//step2            callback(n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python的一些东东">
-<meta property="og:url" content="http://firezyz.github.io/2016/03/14/Python的一些东东/index.html">
+<meta property="og:title" content="callback和promise的错误捕获">
+<meta property="og:url" content="http://firezyz.github.io/2016/05/16/callback和promise的错误捕获/index.html">
 <meta property="og:site_name" content="卡 · 求索">
-<meta property="og:description" content="写在最前
-The Zen of Python, by Tim Peters
-Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated.Flat is better than nested.Sparse">
-<meta property="og:updated_time" content="2016-04-25T03:49:41.693Z">
+<meta property="og:description" content="callback：1234567891011121314151617181920212223242526272829303132333435&apos;use strict&apos;;function callbackAfter3s(callback)&amp;#123;	setTimeout(function()&amp;#123;        try&amp;#123;			//step2            callback(n">
+<meta property="og:updated_time" content="2016-05-24T08:51:44.591Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python的一些东东">
-<meta name="twitter:description" content="写在最前
-The Zen of Python, by Tim Peters
-Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated.Flat is better than nested.Sparse">
+<meta name="twitter:title" content="callback和promise的错误捕获">
+<meta name="twitter:description" content="callback：1234567891011121314151617181920212223242526272829303132333435&apos;use strict&apos;;function callbackAfter3s(callback)&amp;#123;	setTimeout(function()&amp;#123;        try&amp;#123;			//step2            callback(n">
 
 
 
@@ -90,7 +84,7 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
   };
 </script>
 
-  <title> Python的一些东东 | 卡 · 求索 </title>
+  <title> callback和promise的错误捕获 | 卡 · 求索 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -228,7 +222,7 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
             
             
               
-                Python的一些东东
+                callback和promise的错误捕获
               
             
           </h1>
@@ -240,8 +234,8 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-14T21:35:55+08:00" content="2016-03-14">
-              2016-03-14
+            <time itemprop="dateCreated" datetime="2016-05-16T19:49:09+08:00" content="2016-05-16">
+              2016-05-16
             </time>
           </span>
 
@@ -270,8 +264,8 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/14/Python的一些东东/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/14/Python的一些东东/" itemprop="commentsCount"></span>
+                <a href="/2016/05/16/callback和promise的错误捕获/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/16/callback和promise的错误捕获/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -293,31 +287,48 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
       
 
       
-        <h2 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h2><blockquote>
-<p>The Zen of Python, by Tim Peters</p>
-<p>Beautiful is better than ugly.<br>Explicit is better than implicit.<br>Simple is better than complex.<br>Complex is better than complicated.<br>Flat is better than nested.<br>Sparse is better than dense.<br>Readability counts.<br>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.<br>Errors should never pass silently.<br>Unless explicitly silenced.<br>In the face of ambiguity, refuse the temptation to guess.<br>There should be one– and preferably only one –obvious<br>way to do it.<br>Although that way may not be obvious at first unless you’re Dutch.<br>Now is better than never.<br>Although never is often better than <em>right</em> now.<br>If the implementation is hard to explain, it’s a bad idea.<br>If the implementation is easy to explain, it may be a good idea.<br>Namespaces are one honking great idea – let’s do more of those!</p>
-</blockquote>
+        <h2 id="callback："><a href="#callback：" class="headerlink" title="callback："></a>callback：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callbackAfter3s</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">			<span class="comment">//step2</span></span><br><span class="line">            callback(<span class="literal">null</span>, <span class="string">'3s'</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">            <span class="built_in">console</span>.error(<span class="string">'Catch in callbackAfter3c'</span>, e);</span><br><span class="line">            callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error from callbackAfter3s'</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error from callbackAfter3s ASync'</span>);</span><br><span class="line">    &#125;, <span class="number">3e3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error from callbackAfter3s Sync'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">'Reveive: '</span>, err, data);</span><br><span class="line">    <span class="keyword">if</span>(!err)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error from handle'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="comment">//step1</span></span><br><span class="line">    callbackAfter3s(handle);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'Catch in global'</span>, e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'Catch in process'</span>, e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>主要放一些Python的一些零零碎碎的东西。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="字符串去空"><a href="#字符串去空" class="headerlink" title="字符串去空"></a>字符串去空</h3><blockquote>
-<ol>
-<li>your_str.replace(‘ ‘,’’)</li>
-<li>‘’.join(your_str.split())</li>
-<li>使用正则表达式</li>
-</ol>
+<h3 id="打印结果："><a href="#打印结果：" class="headerlink" title="打印结果："></a>打印结果：</h3><blockquote>
+<p>Catch in global [Error: Error from callbackAfter3s Sync]<br>Reveive:  null 3s<br>Catch in callbackAfter3s [Error: Error from handle]<br>Reveive:  [Error: Error from callbackAfter3s] undefined<br>Catch in process [Error: Error from callbackAfter3s ASync now]</p>
 </blockquote>
-<h3 id="发送GET、POST请求"><a href="#发送GET、POST请求" class="headerlink" title="发送GET、POST请求"></a>发送GET、POST请求</h3><h4 id="urllib："><a href="#urllib：" class="headerlink" title="urllib："></a>urllib：</h4><p>GET<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">f=urllib.urlopen(<span class="string">"http://m.cnblogs.com/"</span>)</span><br><span class="line">s=f.read()</span><br><span class="line"><span class="keyword">print</span> s</span><br></pre></td></tr></table></figure></p>
-<p>（带参数）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">params = urllib.urlencode(&#123;<span class="string">'id'</span>: <span class="number">8</span>, <span class="string">'name'</span>: <span class="string">'jack'</span>, <span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">f = urllib.urlopen(<span class="string">"http://localhost:18797/MailClient/test.aspx?%s"</span> % params)</span><br><span class="line"><span class="keyword">print</span> f.read()</span><br></pre></td></tr></table></figure></p>
-<p>POST<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line">params = urllib.urlencode(&#123;<span class="string">'id'</span>: <span class="number">8</span>, <span class="string">'name'</span>: <span class="string">'jack'</span>, <span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">f = urllib.urlopen(<span class="string">"http://localhost:18797/MailClient/test.aspx"</span>,params)</span><br><span class="line"><span class="keyword">print</span> f.read()</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">response = urllib2.urlopen(<span class="string">'http://python.org/'</span>) </span><br><span class="line">html = response.read()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">req = urllib2.Request(<span class="string">'http://www.pythontab.com'</span>) </span><br><span class="line">response = urllib2.urlopen(req) </span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">url = <span class="string">'http://www.pythontab.com'</span> </span><br><span class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>, </span><br><span class="line">          <span class="string">'location'</span> : <span class="string">'pythontab'</span>, </span><br><span class="line">          <span class="string">'language'</span> : <span class="string">'Python'</span> &#125; </span><br><span class="line">data = urllib.urlencode(values) </span><br><span class="line">req = urllib2.Request(url, data) </span><br><span class="line">response = urllib2.urlopen(req) </span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line">data = &#123;&#125; </span><br><span class="line">data[<span class="string">'name'</span>] = <span class="string">'Somebody Here'</span> </span><br><span class="line">data[<span class="string">'location'</span>] = <span class="string">'pythontab'</span> </span><br><span class="line">data[<span class="string">'language'</span>] = <span class="string">'Python'</span> </span><br><span class="line">url_values = urllib.urlencode(data) </span><br><span class="line"><span class="keyword">print</span> url_values </span><br><span class="line">name=blueelwang+Here&amp;language=Python&amp;location=pythontab </span><br><span class="line">url = <span class="string">'http://www.pythontab.com'</span> </span><br><span class="line">full_url = url + <span class="string">'?'</span> + url_values </span><br><span class="line">data = urllib2.open(full_url)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib </span><br><span class="line"><span class="keyword">import</span> urllib2 </span><br><span class="line">url = <span class="string">'http://www.pythontab.com'</span> </span><br><span class="line">user_agent = <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span>   </span><br><span class="line">values = &#123;<span class="string">'name'</span> : <span class="string">'Michael Foord'</span>, </span><br><span class="line">          <span class="string">'location'</span> : <span class="string">'pythontab'</span>, </span><br><span class="line">          <span class="string">'language'</span> : <span class="string">'Python'</span> &#125; </span><br><span class="line">headers = &#123; <span class="string">'User-Agent'</span> : user_agent &#125; </span><br><span class="line">data = urllib.urlencode(values) </span><br><span class="line">req = urllib2.Request(url, data, headers) </span><br><span class="line">response = urllib2.urlopen(req) </span><br><span class="line">the_page = response.read()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">req = urllib2.Request(<span class="string">'http://www.pythontab.com'</span>) </span><br><span class="line"><span class="keyword">try</span>: </span><br><span class="line">    urllib2.urlopen(req) </span><br><span class="line"><span class="keyword">except</span> URLError, e: </span><br><span class="line">    <span class="keyword">print</span> e.reason</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">req = urllib2.Request(<span class="string">'http://www.python.org/fish.html'</span>) </span><br><span class="line"><span class="keyword">try</span>: </span><br><span class="line">    urllib2.urlopen(req) </span><br><span class="line"><span class="keyword">except</span> URLError, e: </span><br><span class="line">    <span class="keyword">print</span> e.code </span><br><span class="line">    <span class="keyword">print</span> e.read()</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from urllib2 import Request, urlopen, URLError, HTTPError </span><br><span class="line">req = Request(someurl) </span><br><span class="line">try: </span><br><span class="line">    response = urlopen(req) </span><br><span class="line">except HTTPError, e: </span><br><span class="line">    print 'The server couldn/'t fulfill the request.' </span><br><span class="line">    print 'Error code: ', e.code </span><br><span class="line">except URLError, e: </span><br><span class="line">    print 'We failed to reach a server.' </span><br><span class="line">    print 'Reason: ', e.reason </span><br><span class="line">else: </span><br><span class="line">    # everything is fine</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from urllib2 import Request, urlopen, URLError </span><br><span class="line">req = Request(someurl) </span><br><span class="line">try: </span><br><span class="line">    response = urlopen(req) </span><br><span class="line">except URLError, e: </span><br><span class="line">    if hasattr(e, 'reason'): </span><br><span class="line">        print 'We failed to reach a server.' </span><br><span class="line">        print 'Reason: ', e.reason </span><br><span class="line">    elif hasattr(e, 'code'): </span><br><span class="line">        print 'The server couldn/'t fulfill the request.' </span><br><span class="line">        print 'Error code: ', e.code </span><br><span class="line">else: </span><br><span class="line">    # everything is fine</span><br></pre></td></tr></table></figure>
+<h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><ol>
+<li>程序执行了step1，调用了callbackAfter3s函数。</li>
+<li>进入callbackAfter3s后，先是执行了一个延时函数setTimeout，延迟为3s后执行。同时执行了一个错误抛出。</li>
+<li>这时，程序中try/catch抓住了错误，打印了第一次错误信息<blockquote>
+<p>Catch in global [Error: Error from callbackAfter3s Sync]</p>
+</blockquote>
+</li>
+<li>3s后，setTimeout回调，执行step2，调用了callback函数，即handle函数，传入参数null和’3s’字符串，于是打印第二行信息同时抛出新的错误：<blockquote>
+<p>Reveive:  null 3s</p>
+</blockquote>
+</li>
+<li>在step2外的catch抓住刚刚抛出的错误，于是打印第三行：<blockquote>
+<p>Catch in callbackAfter3s [Error: Error from handle]<br>再次调用callback，即handle，传入参数为新的错误。于是打印第四行错误信息：<br>Reveive:  [Error: Error from callbackAfter3s] undefined</p>
+</blockquote>
+</li>
+<li>打印以上之后，同时err不为空，再次抛出错误。这时已经没有什么地方可以抓住异常或者错误了。于是触发最后uncaughtException，打印了最后一行：<blockquote>
+<p>Catch in process [Error: Error from callbackAfter3s ASync now]</p>
+</blockquote>
+</li>
+<li>结束。</li>
+</ol>
+<h3 id="结论："><a href="#结论：" class="headerlink" title="结论："></a>结论：</h3><ol>
+<li>try catch 只能捕获同步抛出的错误。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">async_error</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Error"</span>);</span><br><span class="line">    &#125;,<span class="number">10</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        async_error();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">run();</span><br></pre></td></tr></table></figure>
+<ol>
+<li>不要轻易在 callback 里 throw 错误，不然容易形成两次回调。</li>
+<li>代码未捕获的错误，会出现在 uncaughtException 事件上，建议做些日志记录；不然，假如你用了进程守护程序（如pm2等），会自动重启应用，进而湮没日志。</li>
+<li>promise 的错误捕获又是不同的，不能想当然。</li>
+</ol>
+<h2 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 内置P romise</span></span><br><span class="line"><span class="keyword">var</span> p = (<span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error from promise by reject'</span>));</span><br><span class="line">    <span class="comment">// 或者通过 throw 的方式抛出，效果相同</span></span><br><span class="line">    <span class="comment">// throw new Error('Error from promise by throw');</span></span><br><span class="line"></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者在 then 通过 throw 抛出错误，也有同样效果</span></span><br><span class="line"><span class="comment">/**</span><br><span class="line">var p = (new Promise(function(resolve)&#123;</span><br><span class="line">    resolve('Data');</span><br><span class="line">&#125;))</span><br><span class="line">.then(function(res)&#123;</span><br><span class="line">    console.info('Receive: ', res);</span><br><span class="line">    throw new Error('Error from promise by throw');</span><br><span class="line">&#125;);</span><br><span class="line">*/</span></span><br><span class="line"></span><br><span class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'UE:Catch in process'</span>, e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.on(<span class="string">'unhandledRejection'</span>, (reason) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">'UR:Catch in process'</span>, reason);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.on(<span class="string">'rejectionHandled'</span>, (p) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">'RH:Catch in process'</span>, p);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    p.catch(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.error(<span class="string">'Catch in Promise'</span>, e);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;, <span class="number">1e3</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="打印："><a href="#打印：" class="headerlink" title="打印："></a>打印：</h3><blockquote>
+<p>UR:Catch in process [Error: Error from promise by reject]<br>RH:Catch in process Promise { <rejected> [Error: Error from promise by reject] }<br>Catch in Promise [Error: Error from promise by reject]</rejected></p>
+</blockquote>
+<h3 id="分析：-1"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h3><ol>
+<li></li>
+</ol>
 
       
     </div>
@@ -332,7 +343,11 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag">#Python</a>
+            <a href="/tags/callback/" rel="tag">#callback</a>
+          
+            <a href="/tags/promise/" rel="tag">#promise</a>
+          
+            <a href="/tags/异常捕获/" rel="tag">#异常捕获</a>
           
         </div>
       
@@ -341,16 +356,16 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/12/如何基于MongoDB使用Elasticsearch/" rel="next" title="如何基于MongoDB使用Elasticsearch">
-                <i class="fa fa-chevron-left"></i> 如何基于MongoDB使用Elasticsearch
+              <a href="/2016/04/25/我是一个线程/" rel="next" title="我是一个线程">
+                <i class="fa fa-chevron-left"></i> 我是一个线程
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/16/2016随手记/" rel="prev" title="2016随手记">
-                2016随手记 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/24/我的求职经历/" rel="prev" title="我的求职经历">
+                我的求职经历 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -415,8 +430,8 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/14/Python的一些东东/"
-           data-title="Python的一些东东" data-url="http://firezyz.github.io/2016/03/14/Python的一些东东/">
+      <div class="ds-thread" data-thread-key="2016/05/16/callback和promise的错误捕获/"
+           data-title="callback和promise的错误捕获" data-url="http://firezyz.github.io/2016/05/16/callback和promise的错误捕获/">
       </div>
     
   </div>
@@ -529,7 +544,7 @@ Beautiful is better than ugly.Explicit is better than implicit.Simple is better 
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最前"><span class="nav-number">1.</span> <span class="nav-text">写在最前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串去空"><span class="nav-number">2.1.</span> <span class="nav-text">字符串去空</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送GET、POST请求"><span class="nav-number">2.2.</span> <span class="nav-text">发送GET、POST请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#urllib："><span class="nav-number">2.2.1.</span> <span class="nav-text">urllib：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#callback："><span class="nav-number">1.</span> <span class="nav-text">callback：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打印结果："><span class="nav-number">1.1.</span> <span class="nav-text">打印结果：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析："><span class="nav-number">1.2.</span> <span class="nav-text">分析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论："><span class="nav-number">1.3.</span> <span class="nav-text">结论：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#promise"><span class="nav-number">2.</span> <span class="nav-text">promise</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打印："><span class="nav-number">2.1.</span> <span class="nav-text">打印：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析：-1"><span class="nav-number">2.2.</span> <span class="nav-text">分析：</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
