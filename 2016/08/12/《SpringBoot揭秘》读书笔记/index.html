@@ -1,0 +1,766 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="读书,笔记,记录," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Spring的一些知识SpringIoCSpringIoC != DI
+SpringIoC = {DI,DL}
+SpringIoC分为两个阶段：收集和注册早期是采用xml配置的形式来收集注册单一Bean：123&amp;lt;bean id=&amp;quot;mockService&amp;quot; class=&amp;quot;..MockServiseImpl&amp;quot;&amp;gt;...&amp;lt;/bean&amp;gt;
+也可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《SpringBoot揭秘》读书笔记">
+<meta property="og:url" content="http://firezyz.github.io/2016/08/12/《SpringBoot揭秘》读书笔记/index.html">
+<meta property="og:site_name" content="卡 · 求索">
+<meta property="og:description" content="Spring的一些知识SpringIoCSpringIoC != DI
+SpringIoC = {DI,DL}
+SpringIoC分为两个阶段：收集和注册早期是采用xml配置的形式来收集注册单一Bean：123&amp;lt;bean id=&amp;quot;mockService&amp;quot; class=&amp;quot;..MockServiseImpl&amp;quot;&amp;gt;...&amp;lt;/bean&amp;gt;
+也可以">
+<meta property="og:updated_time" content="2016-10-14T02:13:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《SpringBoot揭秘》读书笔记">
+<meta name="twitter:description" content="Spring的一些知识SpringIoCSpringIoC != DI
+SpringIoC = {DI,DL}
+SpringIoC分为两个阶段：收集和注册早期是采用xml配置的形式来收集注册单一Bean：123&amp;lt;bean id=&amp;quot;mockService&amp;quot; class=&amp;quot;..MockServiseImpl&amp;quot;&amp;gt;...&amp;lt;/bean&amp;gt;
+也可以">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6260308311132866000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://firezyz.github.io/2016/08/12/《SpringBoot揭秘》读书笔记/"/>
+
+  <title> 《SpringBoot揭秘》读书笔记 | 卡 · 求索 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b5fb0967f52616474fb50f3f20f76d56";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">卡 · 求索</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吾将上下而求索</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《SpringBoot揭秘》读书笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-12T12:31:13+08:00" content="2016-08-12">
+              2016-08-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/12/《SpringBoot揭秘》读书笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/12/《SpringBoot揭秘》读书笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Spring的一些知识"><a href="#Spring的一些知识" class="headerlink" title="Spring的一些知识"></a>Spring的一些知识</h2><h3 id="SpringIoC"><a href="#SpringIoC" class="headerlink" title="SpringIoC"></a>SpringIoC</h3><p>SpringIoC != DI</p>
+<p>SpringIoC = {DI,DL}</p>
+<h3 id="SpringIoC分为两个阶段："><a href="#SpringIoC分为两个阶段：" class="headerlink" title="SpringIoC分为两个阶段："></a>SpringIoC分为两个阶段：</h3><h4 id="收集和注册"><a href="#收集和注册" class="headerlink" title="收集和注册"></a>收集和注册</h4><p>早期是采用xml配置的形式来收集注册单一Bean：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;mockService&quot; class=&quot;..MockServiseImpl&quot;&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>也可以配置按照包扫描的形式去收集注册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-package=&quot;com.firezyz&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="分析和组装"><a href="#分析和组装" class="headerlink" title="分析和组装"></a>分析和组装</h4><p>早期还是通过xml来描述bean和bean的依赖关系，后来通过@Autowiredhe @Inject或者使用Java代码来描述。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;mockService&quot; class=&quot;..MockServiseImpl&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;dependencyService&quot; ref=&quot;dependencyService&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id=&quot;dependencyService&quot; class=&quot;DependencyServiceImpl&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>作者认为spring的XML配置文件本身其实是一种类似于DSL的存在，并非是一种配置。这个区分我觉得没那么重要，因为都有道理的样子。</p>
+</blockquote>
+<h3 id="JavaConfig"><a href="#JavaConfig" class="headerlink" title="JavaConfig"></a>JavaConfig</h3><p>JavaConfig项目其实主要是通过任何一个标注了@Configuration的Java类来作为JavaConfig的配置类。</p>
+<p>来一个整体的示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class MockConfiguration&#123;</span><br><span class="line">	// bean定义</span><br><span class="line">	@Bean</span><br><span class="line">	public MockService mockService()&#123;</span><br><span class="line">		return new MockServiceImpl(dependencyService());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@Bean</span><br><span class="line">	public DependencyService dependencyService()&#123;</span><br><span class="line">		return new DependencyServiceImpl();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在JavaConfig形式的依赖注入过程中，注入的其实是单例。Spring的实现其实是通过拦截配置类的方法调用。一单拥有拦截逻辑的子类发现当前方法没有对应的类型实例的时才会去请求父类的同一方法来初始化对象实例，否则直接返回之前的对象实例。<br>其实个人觉得和单例模式很类似，不难理解。</p>
+</blockquote>
+<h4 id="经常出没的Annotation"><a href="#经常出没的Annotation" class="headerlink" title="经常出没的Annotation"></a>经常出没的Annotation</h4><ol>
+<li><p>@ComponentScan</p>
+<p> 主要是配合元信息Annotation（@Component，@Repository等）使用，将标注了这些元信息Annotation的bean定义类批量采集到Spring的IoC容器中。</p>
+<p> 扫描范围默认是声明了@ComponentScan所在类的package开始扫描，也可以通过basePackages等属性来细粒度的定制@ComponentScan自动扫描的范围。</p>
+</li>
+<li><p>@PropertySource和@PropertySources</p>
+<p> @PropertySource用于从某些地方加载*.properties文件内容，并将其中的内容加载到IoC容器中。</p>
+<blockquote>
+<p>没搞清楚到底是干什么的…</p>
+</blockquote>
+<p> Java8+可以使用@PropertySource并行申明多个，java7-如果需要申明多个，就需要@PropertySources来配合。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@configuration</span><br><span class="line">@PropertySource(&quot;classpath:1.properties&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:2.properties&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:3.properties&quot;)</span><br><span class="line">public class XConfiguration&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@@PropertySources(&#123;</span><br><span class="line">@PropertySource(&quot;classpath:1.properties&quot;),</span><br><span class="line">@PropertySource(&quot;classpath:2.properties&quot;),</span><br><span class="line">@PropertySource(&quot;classpath:3.properties&quot;)</span><br><span class="line">&#125;)</span><br><span class="line">public class XConfiguration&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>@Import 与 @ImportResource<br> 将多个分开的容器配置合到一个配置中。@ImportResource可以引入xml配置，这个是为了兼容吧。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@Import(MockConfiguration.class)</span><br><span class="line">public class XConfiguration&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="SpringBoot的工作机制"><a href="#SpringBoot的工作机制" class="headerlink" title="SpringBoot的工作机制"></a>SpringBoot的工作机制</h2><h3 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h3><p>@SpringBootApplication是一个“三体”结构，是一个复合Annotation：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Target（ElementType.Type）</span><br><span class="line">@Retention（RetentionPolicy.RUNTIME）</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@Configuration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan</span><br><span class="line">public @Interface SpirngBootApplication&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最主要的就这三个Annotation：@Configuration、@EnableAutoConfiguration、@ComponentScan</p>
+<h4 id="Configuration"><a href="#Configuration" class="headerlink" title="@Configuration"></a>@Configuration</h4><p>这里的@Configuration其实就是JavaConfig中的那个@Configuration，本身目前的习惯写法其实并不容易理解，完全可分解开来看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan</span><br><span class="line">public class DemoConfiguration&#123;</span><br><span class="line">	@Bean</span><br><span class="line">	public Controller controller&#123;</span><br><span class="line">		return new Controller();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class DemoApplication&#123;</span><br><span class="line">	public static void main(String[] argv)&#123;</span><br><span class="line">		SpringApplication.run(DemoConfiguration.class, argv);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实还是Spring中的一些东西。</p>
+<h4 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h4><p>@EnableAutoConfiguration是借助@Import的帮助，将所有符合自动配置条件的bena定义加载到IoC容器中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Document</span><br><span class="line">@Inherited</span><br><span class="line">@AutoConfigurationPackage</span><br><span class="line">@Import(EnableAutoConfiguratioinImportSelectior.class)</span><br><span class="line">public @interface EnableAutoConfiguration&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中EnableAutoConfiguratioinImportSelectior负责将所有符合条件的@Configuration配置都加载到当前SpringBoot创建并使用的IoC容器中。</p>
+<p>然后通过Spring框架原有的一个工具类：SpringFactoriesLoader</p>
+<h4 id="自动配置的幕后英雄：SpringFactoriesLoader详解"><a href="#自动配置的幕后英雄：SpringFactoriesLoader详解" class="headerlink" title="自动配置的幕后英雄：SpringFactoriesLoader详解"></a>自动配置的幕后英雄：SpringFactoriesLoader详解</h4><p>实际最终@EnableAutoConfiguration就变成了从classpath中搜索所有META-INF/spring.factories配置文件，并将其中的org.spring-framework.boot.autoconfigure.enableAutoConfiguration对应的配置项通过反射（Java Reflection）实例化为对应的标注了@Configuration的JavaConfig形式的IoC容器配置类，然后汇总为一个兵加载到IoC容器。</p>
+<p>####可有可无的@ComponentScan<br>批量自动扫描应该是适用于bean比较多的情况，单个bean完全可以通过手工单个注册，所以并不是一定的。</p>
+<h3 id="SpringApplication"><a href="#SpringApplication" class="headerlink" title="SpringApplication"></a>SpringApplication</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class DemoApplication &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		SpringApplication bootstrap = new SpringApplicacion(DemoConfiguration.class);</span><br><span class="line">		bootstrap.setBanner(new Banner()&#123;</span><br><span class="line">			@Override</span><br><span class="line">			public void printBanner(Environment environment, Class&lt;?&gt; aClass, PrintStream printStream) &#123;</span><br><span class="line">				// 打印啥啥啥的	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">		bootstrap.setBannerMode(Banner.Mode.CONSOLE);</span><br><span class="line">		bootstrap.run(args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置自定义banner黑科技：将ASCII Art字符画放到一个资源文件中，然后通过ResourceBanner来加载：<code>bootstrap.setBanner(new ResourceBanner(new ClassPathResource(&quot;banner.txt&quot;)))</code></p>
+</blockquote>
+<h4 id="SpringApplication执行流程"><a href="#SpringApplication执行流程" class="headerlink" title="SpringApplication执行流程"></a>SpringApplication执行流程</h4><ol>
+<li><p>如果调用SpringApplication的静态方法run方法，其实run方法内部也是先创建一个SpringApplication的实例对象，然后调用这个创建好的对象的run方法。在实例初始化的时候，会提前做这些事：</p>
+<blockquote>
+<p>觉得有点奇怪，那如果我直接初始化SpringApplication，然后调用run是不是就跳过了以下这些步骤？</p>
+<p>刚刚做了个实验，发现即使我初始化之后，调用run方法还是那个静态的run方法，因为参数列表不一样，在静态run的内部其实掉了另一个静态的run方法，中间并没有干了什么事情，即使干了，也不会影响的样子。</p>
+</blockquote>
+</li>
+</ol>
+<p>(未完)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Firezyz WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书/" rel="tag">#读书</a>
+          
+            <a href="/tags/笔记/" rel="tag">#笔记</a>
+          
+            <a href="/tags/记录/" rel="tag">#记录</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/11/常用到的小技巧/" rel="next" title="常用到的小技巧">
+                <i class="fa fa-chevron-left"></i> 常用到的小技巧
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/28/让文本飞——linux日志处理相关命令/" rel="prev" title="让文本飞——linux日志处理相关命令">
+                让文本飞——linux日志处理相关命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/12/《SpringBoot揭秘》读书笔记/"
+           data-title="《SpringBoot揭秘》读书笔记" data-url="http://firezyz.github.io/2016/08/12/《SpringBoot揭秘》读书笔记/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="Firezyz" />
+          <p class="site-author-name" itemprop="name">Firezyz</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的一些知识"><span class="nav-number">1.</span> <span class="nav-text">Spring的一些知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringIoC"><span class="nav-number">1.1.</span> <span class="nav-text">SpringIoC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringIoC分为两个阶段："><span class="nav-number">1.2.</span> <span class="nav-text">SpringIoC分为两个阶段：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#收集和注册"><span class="nav-number">1.2.1.</span> <span class="nav-text">收集和注册</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析和组装"><span class="nav-number">1.2.2.</span> <span class="nav-text">分析和组装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaConfig"><span class="nav-number">1.3.</span> <span class="nav-text">JavaConfig</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#经常出没的Annotation"><span class="nav-number">1.3.1.</span> <span class="nav-text">经常出没的Annotation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot的工作机制"><span class="nav-number">2.</span> <span class="nav-text">SpringBoot的工作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBootApplication"><span class="nav-number">2.1.</span> <span class="nav-text">@SpringBootApplication</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration"><span class="nav-number">2.1.1.</span> <span class="nav-text">@Configuration</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EnableAutoConfiguration"><span class="nav-number">2.1.2.</span> <span class="nav-text">@EnableAutoConfiguration</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动配置的幕后英雄：SpringFactoriesLoader详解"><span class="nav-number">2.1.3.</span> <span class="nav-text">自动配置的幕后英雄：SpringFactoriesLoader详解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringApplication"><span class="nav-number">2.2.</span> <span class="nav-text">SpringApplication</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SpringApplication执行流程"><span class="nav-number">2.2.1.</span> <span class="nav-text">SpringApplication执行流程</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Firezyz</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"firezyz"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
