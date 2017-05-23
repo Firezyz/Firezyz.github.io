@@ -1,0 +1,1154 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,源码," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言ArrayUtils是apache提供的操作数组的工具类.版本3.5
+提供的方法们toString, hashCode和isEquals方法public static String toString(Object array) {
+    return toString(array, &amp;quot;{}&amp;quot;);
+}
+
+public static String toString(Objec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="org.apache.commons.lang3.ArrayUtils">
+<meta property="og:url" content="http://firezyz.github.io/2017/05/22/org.apache.commons.lang3.ArrayUtils/index.html">
+<meta property="og:site_name" content="卡 · 求索">
+<meta property="og:description" content="前言ArrayUtils是apache提供的操作数组的工具类.版本3.5
+提供的方法们toString, hashCode和isEquals方法public static String toString(Object array) {
+    return toString(array, &amp;quot;{}&amp;quot;);
+}
+
+public static String toString(Objec">
+<meta property="og:updated_time" content="2017-05-23T07:11:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="org.apache.commons.lang3.ArrayUtils">
+<meta name="twitter:description" content="前言ArrayUtils是apache提供的操作数组的工具类.版本3.5
+提供的方法们toString, hashCode和isEquals方法public static String toString(Object array) {
+    return toString(array, &amp;quot;{}&amp;quot;);
+}
+
+public static String toString(Objec">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6260308311132866000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://firezyz.github.io/2017/05/22/org.apache.commons.lang3.ArrayUtils/"/>
+
+  <title> org.apache.commons.lang3.ArrayUtils | 卡 · 求索 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b5fb0967f52616474fb50f3f20f76d56";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">卡 · 求索</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吾将上下而求索</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                org.apache.commons.lang3.ArrayUtils
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-22T13:45:38+08:00" content="2017-05-22">
+              2017-05-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/22/org.apache.commons.lang3.ArrayUtils/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/22/org.apache.commons.lang3.ArrayUtils/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ArrayUtils是apache提供的操作数组的工具类.版本3.5</p>
+<h2 id="提供的方法们"><a href="#提供的方法们" class="headerlink" title="提供的方法们"></a>提供的方法们</h2><h3 id="toString-hashCode和isEquals方法"><a href="#toString-hashCode和isEquals方法" class="headerlink" title="toString, hashCode和isEquals方法"></a>toString, hashCode和isEquals方法</h3><pre><code>public static String toString(Object array) {
+    return toString(array, &quot;{}&quot;);
+}
+
+public static String toString(Object array, String stringIfNull) {
+    return array == null?stringIfNull:(new ToStringBuilder(array, ToStringStyle.SIMPLE_STYLE)).append(array).toString();
+}
+
+public static int hashCode(Object array) {
+    return (new HashCodeBuilder()).append(array).toHashCode();
+}
+
+/** @deprecated */
+@Deprecated
+public static boolean isEquals(Object array1, Object array2) {
+    return (new EqualsBuilder()).append(array1, array2).isEquals();
+}
+</code></pre><p>toString方法提供了一个设置array为null时候的默认字符串设定/</p>
+<a id="more"></a>
+<h3 id="array转Map方法"><a href="#array转Map方法" class="headerlink" title="array转Map方法"></a>array转Map方法</h3><pre><code>public static Map&lt;Object, Object&gt; toMap(Object[] array) {
+    if(array == null) {
+        return null;
+    } else {
+        HashMap map = new HashMap((int)((double)array.length * 1.5D));
+
+        for(int i = 0; i &lt; array.length; ++i) {
+            Object object = array[i];
+            if(object instanceof Entry) {
+                Entry entry = (Entry)object;
+                map.put(entry.getKey(), entry.getValue());
+            } else {
+                if(!(object instanceof Object[])) {
+                    throw new IllegalArgumentException(&quot;Array element &quot; + i + &quot;, \&apos;&quot; + object + &quot;\&apos;, is neither of type Map.Entry nor an Array&quot;);
+                }
+
+                Object[] var5 = (Object[])((Object[])object);
+                if(var5.length &lt; 2) {
+                    throw new IllegalArgumentException(&quot;Array element &quot; + i + &quot;, \&apos;&quot; + object + &quot;\&apos;, has a length less than 2&quot;);
+                }
+
+                map.put(var5[0], var5[1]);
+            }
+        }
+
+        return map;
+    }
+}
+</code></pre><p><code>HashMap map = new HashMap((int)((double)array.length * 1.5D));</code> 可以看到转的HashMap初始化的时候就填入了初始值.至于为啥是1.5倍,应该是想一次初始化到位,省的HashMap扩容. </p>
+<h3 id="转数组方法toArray"><a href="#转数组方法toArray" class="headerlink" title="转数组方法toArray"></a>转数组方法toArray</h3><pre><code>public static &lt;T&gt; T[] toArray(T... items) {
+    return items;
+}
+</code></pre><h3 id="clone方法"><a href="#clone方法" class="headerlink" title="clone方法"></a>clone方法</h3><h3 id="nullToEmpty方法"><a href="#nullToEmpty方法" class="headerlink" title="nullToEmpty方法"></a>nullToEmpty方法</h3><p>如果传入对象为null,返回一个空数组.</p>
+<pre><code>public static &lt;T&gt; T[] nullToEmpty(T[] array, Class&lt;T[]&gt; type) {
+    if(type == null) {
+        throw new IllegalArgumentException(&quot;The type must not be null&quot;);
+    } else {
+        return array == null?(Object[])type.cast(Array.newInstance(type.getComponentType(), 0)):array;
+    }
+}
+</code></pre><h3 id="数组截取subarray方法"><a href="#数组截取subarray方法" class="headerlink" title="数组截取subarray方法"></a>数组截取subarray方法</h3><pre><code>public static &lt;T&gt; T[] subarray(T[] array, int startIndexInclusive, int endIndexExclusive) {
+    if(array == null) {
+        return null;
+    } else {
+        if(startIndexInclusive &lt; 0) {
+            startIndexInclusive = 0;
+        }
+
+        if(endIndexExclusive &gt; array.length) {
+            endIndexExclusive = array.length;
+        }
+
+        int newSize = endIndexExclusive - startIndexInclusive;
+        Class type = array.getClass().getComponentType();
+        Object[] subarray;
+        if(newSize &lt;= 0) {
+            subarray = (Object[])((Object[])Array.newInstance(type, 0));
+            return subarray;
+        } else {
+            subarray = (Object[])((Object[])Array.newInstance(type, newSize));
+            System.arraycopy(array, startIndexInclusive, subarray, 0, newSize);
+            return subarray;
+        }
+    }
+}
+</code></pre><p>实现方式本质是System.arraycopy()方法.arraycopy是个native方法,意味着执行效率高.</p>
+<h3 id="比较数组长度-isSameLength方法"><a href="#比较数组长度-isSameLength方法" class="headerlink" title="比较数组长度 isSameLength方法"></a>比较数组长度 isSameLength方法</h3><pre><code>public static boolean isSameLength(Object[] array1, Object[] array2) {
+    return getLength(array1) == getLength(array2);
+}
+</code></pre><h3 id="获取数组长度-getLength方法"><a href="#获取数组长度-getLength方法" class="headerlink" title="获取数组长度 getLength方法"></a>获取数组长度 getLength方法</h3><pre><code>public static int getLength(Object array) {
+    return array == null?0:Array.getLength(array);
+}
+</code></pre><h3 id="比较数组类型-isSameType方法"><a href="#比较数组类型-isSameType方法" class="headerlink" title="比较数组类型 isSameType方法"></a>比较数组类型 isSameType方法</h3><pre><code>public static boolean isSameType(Object array1, Object array2) {
+    if(array1 != null &amp;&amp; array2 != null) {
+        return array1.getClass().getName().equals(array2.getClass().getName());
+    } else {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+}
+</code></pre><h3 id="翻转数组元素-reverse方法"><a href="#翻转数组元素-reverse方法" class="headerlink" title="翻转数组元素 reverse方法"></a>翻转数组元素 reverse方法</h3><pre><code>public static void reverse(Object[] array) {
+    if(array != null) {
+        reverse((Object[])array, 0, array.length);
+    }
+}
+
+public static void reverse(Object[] array, int startIndexInclusive, int endIndexExclusive) {
+    if(array != null) {
+        int i = startIndexInclusive &lt; 0?0:startIndexInclusive;
+
+        for(int j = Math.min(array.length, endIndexExclusive) - 1; j &gt; i; ++i) {
+            Object tmp = array[j];
+            array[j] = array[i];
+            array[i] = tmp;
+            --j;
+        }
+
+    }
+}
+</code></pre><h3 id="交换数组元素-swap方法"><a href="#交换数组元素-swap方法" class="headerlink" title="交换数组元素 swap方法"></a>交换数组元素 swap方法</h3><pre><code>public static void swap(Object[] array, int offset1, int offset2) {
+    if(array != null &amp;&amp; array.length != 0) {
+        swap((Object[])array, offset1, offset2, 1);
+    }
+}
+
+public static void swap(Object[] array, int offset1, int offset2, int len) {
+    if(array != null &amp;&amp; array.length != 0 &amp;&amp; offset1 &lt; array.length &amp;&amp; offset2 &lt; array.length) {
+        if(offset1 &lt; 0) {
+            offset1 = 0;
+        }
+
+        if(offset2 &lt; 0) {
+            offset2 = 0;
+        }
+
+        len = Math.min(Math.min(len, array.length - offset1), array.length - offset2);
+
+        for(int i = 0; i &lt; len; ++offset2) {
+            Object aux = array[offset1];
+            array[offset1] = array[offset2];
+            array[offset2] = aux;
+            ++i;
+            ++offset1;
+        }
+
+    }
+}
+</code></pre><p>一般使用第一个方法,就是交换两个元素.</p>
+<h3 id="数组平移元素-shift方法"><a href="#数组平移元素-shift方法" class="headerlink" title="数组平移元素 shift方法"></a>数组平移元素 shift方法</h3><pre><code>public static void shift(final Object[] array, int offset) {
+    if (array == null) {
+        return;
+    }
+    shift(array, 0, array.length, offset);
+}
+
+public static void shift(final Object[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+    if (array == null) {
+        return;
+    }
+    if (startIndexInclusive &gt;= array.length - 1 || endIndexExclusive &lt;= 0) {
+        return;
+    }
+    if (startIndexInclusive &lt; 0) {
+        startIndexInclusive = 0;
+    } 
+    if (endIndexExclusive &gt;= array.length) {
+        endIndexExclusive = array.length;
+    }        
+    int n = endIndexExclusive - startIndexInclusive;
+    if (n &lt;= 1) {
+        return;
+    }
+    offset %= n;
+    if (offset &lt; 0) {
+        offset += n;
+    }
+    // For algorithm explanations and proof of O(n) time complexity and O(1) space complexity
+    // see https://beradrian.wordpress.com/2015/04/07/shift-an-array-in-on-in-place/
+    while (n &gt; 1 &amp;&amp; offset &gt; 0) {
+        int n_offset = n - offset;
+
+        if (offset &gt; n_offset) {
+            swap(array, startIndexInclusive, startIndexInclusive + n - n_offset,  n_offset);
+            n = offset;
+            offset -= n_offset;
+        } else if (offset &lt; n_offset) {
+            swap(array, startIndexInclusive, startIndexInclusive + n_offset,  offset);
+            startIndexInclusive += offset;
+            n = n_offset;
+        } else {
+            swap(array, startIndexInclusive, startIndexInclusive + n_offset, offset);
+            break;
+        }
+    }
+}
+</code></pre><h3 id="寻找元素下标-indexOf-lastIndexOf方法"><a href="#寻找元素下标-indexOf-lastIndexOf方法" class="headerlink" title="寻找元素下标 indexOf lastIndexOf方法"></a>寻找元素下标 indexOf lastIndexOf方法</h3><pre><code>public static int indexOf(final Object[] array, final Object objectToFind) {
+    return indexOf(array, objectToFind, 0);
+}
+
+public static int indexOf(final Object[] array, final Object objectToFind, int startIndex) {
+    if (array == null) {
+        return INDEX_NOT_FOUND;
+    }
+    if (startIndex &lt; 0) {
+        startIndex = 0;
+    }
+    if (objectToFind == null) {
+        for (int i = startIndex; i &lt; array.length; i++) {
+            if (array[i] == null) {
+                return i;
+            }
+        }
+    } else {
+        for (int i = startIndex; i &lt; array.length; i++) {
+            if (objectToFind.equals(array[i])) {
+                return i;
+            }
+        }
+    }
+    return INDEX_NOT_FOUND;
+}
+
+public static int lastIndexOf(final Object[] array, final Object objectToFind) {
+    return lastIndexOf(array, objectToFind, Integer.MAX_VALUE);
+}
+
+public static int lastIndexOf(final Object[] array, final Object objectToFind, int startIndex) {
+    if (array == null) {
+        return INDEX_NOT_FOUND;
+    }
+    if (startIndex &lt; 0) {
+        return INDEX_NOT_FOUND;
+    } else if (startIndex &gt;= array.length) {
+        startIndex = array.length - 1;
+    }
+    if (objectToFind == null) {
+        for (int i = startIndex; i &gt;= 0; i--) {
+            if (array[i] == null) {
+                return i;
+            }
+        }
+    } else if (array.getClass().getComponentType().isInstance(objectToFind)) {
+        for (int i = startIndex; i &gt;= 0; i--) {
+            if (objectToFind.equals(array[i])) {
+                return i;
+            }
+        }
+    }
+    return INDEX_NOT_FOUND;
+}
+</code></pre><h3 id="判断数组包含元素-contains方法"><a href="#判断数组包含元素-contains方法" class="headerlink" title="判断数组包含元素 contains方法"></a>判断数组包含元素 contains方法</h3><pre><code>public static boolean contains(final Object[] array, final Object objectToFind) {
+    return indexOf(array, objectToFind) != INDEX_NOT_FOUND;
+}
+</code></pre><h3 id="装箱方法-toObject-拆箱方法-toPrimitive"><a href="#装箱方法-toObject-拆箱方法-toPrimitive" class="headerlink" title="装箱方法 toObject 拆箱方法 toPrimitive"></a>装箱方法 toObject 拆箱方法 toPrimitive</h3><pre><code>public static char[] toPrimitive(final Character[] array) {
+    if (array == null) {
+        return null;
+    } else if (array.length == 0) {
+        return EMPTY_CHAR_ARRAY;
+    }
+    final char[] result = new char[array.length];
+    for (int i = 0; i &lt; array.length; i++) {
+        result[i] = array[i].charValue();
+    }
+    return result;
+}
+
+public static Character[] toObject(final char[] array) {
+    if (array == null) {
+        return null;
+    } else if (array.length == 0) {
+        return EMPTY_CHARACTER_OBJECT_ARRAY;
+    }
+    final Character[] result = new Character[array.length];
+    for (int i = 0; i &lt; array.length; i++) {
+        result[i] = Character.valueOf(array[i]);
+    }
+    return result;
+ }
+</code></pre><h3 id="判断数组是否为空-isEmpty方法"><a href="#判断数组是否为空-isEmpty方法" class="headerlink" title="判断数组是否为空 isEmpty方法"></a>判断数组是否为空 isEmpty方法</h3><pre><code>public static boolean isEmpty(final Object[] array) {
+    return getLength(array) == 0;
+}
+
+public static &lt;T&gt; boolean isNotEmpty(final T[] array) {
+    return !isEmpty(array);
+}
+</code></pre><h3 id="数组操作-addAll方法"><a href="#数组操作-addAll方法" class="headerlink" title="数组操作 addAll方法"></a>数组操作 addAll方法</h3><pre><code>public static &lt;T&gt; T[] addAll(final T[] array1, final T... array2) {
+    if (array1 == null) {
+        return clone(array2);
+    } else if (array2 == null) {
+        return clone(array1);
+    }
+    final Class&lt;?&gt; type1 = array1.getClass().getComponentType();
+    @SuppressWarnings(&quot;unchecked&quot;) // OK, because array is of type T
+    final
+    T[] joinedArray = (T[]) Array.newInstance(type1, array1.length + array2.length);
+    System.arraycopy(array1, 0, joinedArray, 0, array1.length);
+    try {
+        System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
+    } catch (final ArrayStoreException ase) {
+        // Check if problem was due to incompatible types
+        /*
+         * We do this here, rather than before the copy because:
+         * - it would be a wasted check most of the time
+         * - safer, in case check turns out to be too strict
+         */
+        final Class&lt;?&gt; type2 = array2.getClass().getComponentType();
+        if (!type1.isAssignableFrom(type2)) {
+            throw new IllegalArgumentException(&quot;Cannot store &quot; + type2.getName() + &quot; in an array of &quot;
+                    + type1.getName(), ase);
+        }
+        throw ase; // No, so rethrow original
+    }
+    return joinedArray;
+}
+
+public static &lt;T&gt; T[] add(final T[] array, final T element) {
+    Class&lt;?&gt; type;
+    if (array != null) {
+        type = array.getClass().getComponentType();
+    } else if (element != null) {
+        type = element.getClass();
+    } else {
+        throw new IllegalArgumentException(&quot;Arguments cannot both be null&quot;);
+    }
+    @SuppressWarnings(&quot;unchecked&quot;) // type must be T
+    final
+    T[] newArray = (T[]) copyArrayGrow1(array, type);
+    newArray[newArray.length - 1] = element;
+    return newArray;
+}
+
+public static &lt;T&gt; T[] add(final T[] array, final int index, final T element) {
+    Class&lt;?&gt; clss = null;
+    if (array != null) {
+        clss = array.getClass().getComponentType();
+    } else if (element != null) {
+        clss = element.getClass();
+    } else {
+        throw new IllegalArgumentException(&quot;Array and element cannot both be null&quot;);
+    }
+    @SuppressWarnings(&quot;unchecked&quot;) // the add method creates an array of type clss, which is type T
+    final T[] newArray = (T[]) add(array, index, element, clss);
+    return newArray;
+}
+</code></pre><h3 id="复制多一个数组-copyArrayGrow1方法"><a href="#复制多一个数组-copyArrayGrow1方法" class="headerlink" title="复制多一个数组 copyArrayGrow1方法"></a>复制多一个数组 copyArrayGrow1方法</h3><pre><code>private static Object copyArrayGrow1(final Object array, final Class&lt;?&gt; newArrayComponentType) {
+    if (array != null) {
+        final int arrayLength = Array.getLength(array);
+        final Object newArray = Array.newInstance(array.getClass().getComponentType(), arrayLength + 1);
+        System.arraycopy(array, 0, newArray, 0, arrayLength);
+        return newArray;
+    }
+    return Array.newInstance(newArrayComponentType, 1);
+}
+</code></pre><p>这个方法返回已经比当前数组多一个长度的数组拷贝.</p>
+<h3 id="删除数组元素-remove方法"><a href="#删除数组元素-remove方法" class="headerlink" title="删除数组元素 remove方法"></a>删除数组元素 remove方法</h3><pre><code>public static &lt;T&gt; T[] remove(final T[] array, final int index) {
+    return (T[]) remove((Object) array, index);
+}
+
+public static &lt;T&gt; T[] removeElement(final T[] array, final Object element) {
+    final int index = indexOf(array, element);
+    if (index == INDEX_NOT_FOUND) {
+        return clone(array);
+    }
+    return remove(array, index);
+}
+
+public static &lt;T&gt; T[] removeAll(final T[] array, final int... indices) {
+    return (T[]) removeAll((Object) array, indices);
+}
+
+public static &lt;T&gt; T[] removeElements(final T[] array, final T... values) {
+    if (isEmpty(array) || isEmpty(values)) {
+        return clone(array);
+    }
+    final HashMap&lt;T, MutableInt&gt; occurrences = new HashMap&lt;T, MutableInt&gt;(values.length);
+    for (final T v : values) {
+        final MutableInt count = occurrences.get(v);
+        if (count == null) {
+            occurrences.put(v, new MutableInt(1));
+        } else {
+            count.increment();
+        }
+    }
+    final BitSet toRemove = new BitSet();
+    for (int i = 0; i &lt; array.length; i++) {
+        final T key = array[i];
+        final MutableInt count = occurrences.get(key);
+        if (count != null) {
+            if (count.decrementAndGet() == 0) {
+                occurrences.remove(key);
+            }
+            toRemove.set(i);
+        }
+    }
+    @SuppressWarnings(&quot;unchecked&quot;) // removeAll() always creates an array of the same type as its input
+    final
+    T[] result = (T[]) removeAll(array, toRemove);
+    return result;
+}
+
+public static byte[] removeAll(final byte[] array, final int... indices) {
+    return (byte[]) removeAll((Object) array, indices);
+}
+</code></pre><h3 id="数组元素是否有序-isSorted方法"><a href="#数组元素是否有序-isSorted方法" class="headerlink" title="数组元素是否有序 isSorted方法"></a>数组元素是否有序 isSorted方法</h3><pre><code>public static &lt;T extends Comparable&lt;? super T&gt;&gt; boolean isSorted(final T[] array) {
+    return isSorted(array, new Comparator&lt;T&gt;() {
+        @Override
+        public int compare(T o1, T o2) {
+            return o1.compareTo(o2);
+        }
+    });
+}
+
+public static &lt;T&gt; boolean isSorted(final T[] array, final Comparator&lt;T&gt; comparator) {
+    if (comparator == null) {
+        throw new IllegalArgumentException(&quot;Comparator should not be null.&quot;);
+    }
+
+    if (array == null || array.length &lt; 2) {
+        return true;
+    }
+
+    T previous = array[0];
+    final int n = array.length;
+    for (int i = 1; i &lt; n; i++) {
+        final T current = array[i];
+        if (comparator.compare(previous, current) &gt; 0) {
+            return false;
+        }
+
+        previous = current;
+    }
+    return true;
+}
+</code></pre><h3 id="删除所有出现元素-removeAllOccurences方法"><a href="#删除所有出现元素-removeAllOccurences方法" class="headerlink" title="删除所有出现元素 removeAllOccurences方法"></a>删除所有出现元素 removeAllOccurences方法</h3><pre><code>public static &lt;T&gt; T[] removeAllOccurences(final T[] array, final T element) {
+    int index = indexOf(array, element);
+    if (index == INDEX_NOT_FOUND) {
+        return clone(array);
+    }
+
+    int[] indices = new int[array.length - index];
+    indices[0] = index;
+    int count = 1;
+
+    while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+        indices[count++] = index;
+    }
+
+    return removeAll(array, Arrays.copyOf(indices, count));
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Firezyz WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/源码/" rel="tag">#源码</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/17/java泛型程序设计/" rel="next" title="java泛型程序设计">
+                <i class="fa fa-chevron-left"></i> java泛型程序设计
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/22/org.apache.commons.lang3.ArrayUtils/"
+           data-title="org.apache.commons.lang3.ArrayUtils" data-url="http://firezyz.github.io/2017/05/22/org.apache.commons.lang3.ArrayUtils/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="Firezyz" />
+          <p class="site-author-name" itemprop="name">Firezyz</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提供的方法们"><span class="nav-number">2.</span> <span class="nav-text">提供的方法们</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#toString-hashCode和isEquals方法"><span class="nav-number">2.1.</span> <span class="nav-text">toString, hashCode和isEquals方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array转Map方法"><span class="nav-number">2.2.</span> <span class="nav-text">array转Map方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转数组方法toArray"><span class="nav-number">2.3.</span> <span class="nav-text">转数组方法toArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clone方法"><span class="nav-number">2.4.</span> <span class="nav-text">clone方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nullToEmpty方法"><span class="nav-number">2.5.</span> <span class="nav-text">nullToEmpty方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组截取subarray方法"><span class="nav-number">2.6.</span> <span class="nav-text">数组截取subarray方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较数组长度-isSameLength方法"><span class="nav-number">2.7.</span> <span class="nav-text">比较数组长度 isSameLength方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取数组长度-getLength方法"><span class="nav-number">2.8.</span> <span class="nav-text">获取数组长度 getLength方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较数组类型-isSameType方法"><span class="nav-number">2.9.</span> <span class="nav-text">比较数组类型 isSameType方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#翻转数组元素-reverse方法"><span class="nav-number">2.10.</span> <span class="nav-text">翻转数组元素 reverse方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换数组元素-swap方法"><span class="nav-number">2.11.</span> <span class="nav-text">交换数组元素 swap方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组平移元素-shift方法"><span class="nav-number">2.12.</span> <span class="nav-text">数组平移元素 shift方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找元素下标-indexOf-lastIndexOf方法"><span class="nav-number">2.13.</span> <span class="nav-text">寻找元素下标 indexOf lastIndexOf方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断数组包含元素-contains方法"><span class="nav-number">2.14.</span> <span class="nav-text">判断数组包含元素 contains方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装箱方法-toObject-拆箱方法-toPrimitive"><span class="nav-number">2.15.</span> <span class="nav-text">装箱方法 toObject 拆箱方法 toPrimitive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断数组是否为空-isEmpty方法"><span class="nav-number">2.16.</span> <span class="nav-text">判断数组是否为空 isEmpty方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组操作-addAll方法"><span class="nav-number">2.17.</span> <span class="nav-text">数组操作 addAll方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制多一个数组-copyArrayGrow1方法"><span class="nav-number">2.18.</span> <span class="nav-text">复制多一个数组 copyArrayGrow1方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数组元素-remove方法"><span class="nav-number">2.19.</span> <span class="nav-text">删除数组元素 remove方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组元素是否有序-isSorted方法"><span class="nav-number">2.20.</span> <span class="nav-text">数组元素是否有序 isSorted方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除所有出现元素-removeAllOccurences方法"><span class="nav-number">2.21.</span> <span class="nav-text">删除所有出现元素 removeAllOccurences方法</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Firezyz</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"firezyz"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

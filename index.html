@@ -258,6 +258,273 @@
             
               
                 
+                <a class="post-title-link" href="/2017/05/22/org.apache.commons.lang3.ArrayUtils/" itemprop="url">
+                  org.apache.commons.lang3.ArrayUtils
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-22T13:45:38+08:00" content="2017-05-22">
+              2017-05-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/22/org.apache.commons.lang3.ArrayUtils/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/22/org.apache.commons.lang3.ArrayUtils/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ArrayUtils是apache提供的操作数组的工具类.版本3.5</p>
+<h2 id="提供的方法们"><a href="#提供的方法们" class="headerlink" title="提供的方法们"></a>提供的方法们</h2><h3 id="toString-hashCode和isEquals方法"><a href="#toString-hashCode和isEquals方法" class="headerlink" title="toString, hashCode和isEquals方法"></a>toString, hashCode和isEquals方法</h3><pre><code>public static String toString(Object array) {
+    return toString(array, &quot;{}&quot;);
+}
+
+public static String toString(Object array, String stringIfNull) {
+    return array == null?stringIfNull:(new ToStringBuilder(array, ToStringStyle.SIMPLE_STYLE)).append(array).toString();
+}
+
+public static int hashCode(Object array) {
+    return (new HashCodeBuilder()).append(array).toHashCode();
+}
+
+/** @deprecated */
+@Deprecated
+public static boolean isEquals(Object array1, Object array2) {
+    return (new EqualsBuilder()).append(array1, array2).isEquals();
+}
+</code></pre><p>toString方法提供了一个设置array为null时候的默认字符串设定/</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/05/22/org.apache.commons.lang3.ArrayUtils/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/17/java泛型程序设计/" itemprop="url">
+                  java泛型程序设计
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-17T19:02:56+08:00" content="2017-05-17">
+              2017-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/17/java泛型程序设计/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/17/java泛型程序设计/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="奇怪的现象"><a href="#奇怪的现象" class="headerlink" title="奇怪的现象"></a>奇怪的现象</h2><ol>
+<li>有<code>String.class</code>,有<code>List.class</code>,但是没有<code>List&lt;String&gt;.class</code>或是<code>List&lt;Integer&gt;.class</code></li>
+<li>静态变量是被泛型类的所有实例所共享的.对于声明为<code>MyClass&lt;T&gt;</code>的类,访问其中的静态变量的方法仍然是 <code>MyClass.myStaticVar</code>.不管是通过<code>new MyClass&lt;String&gt;</code>还是<code>new MyClass&lt;Integer&gt;</code>创建的对象,都是共享一个静态变量.</li>
+<li>泛型的类型参数不能用在Java异常处理的catch语句中.因为异常处理是由JVM在运行时刻来进行的.由于类型信息被擦除,JVM是无法区分两个异常类型<code>MyException&lt;String&gt;</code>和<code>MyException&lt;Integer&gt;</code>的.对于JVM来说,它们都是<code>MyException</code>类型的.也就无法执行与异常对应的catch语句.</li>
+</ol>
+<p>这些现象都是泛型引起的.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/05/17/java泛型程序设计/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/24/我的求职经历/" itemprop="url">
                   我的求职经历
                 </a>
@@ -506,7 +773,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -523,7 +790,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
