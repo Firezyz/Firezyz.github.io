@@ -1,0 +1,719 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻译," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文地址http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf
+复杂系统本质上是有危险的系统所有引发人们关注的系统(例如交通运输系统,医疗保健系统,发电系统)就其本身的属性而言都有内在且不可避免的危险.危险暴露的频率有时候会发生变化,但系统中所涉及的过程本身就是固有且不可约减的危害.这些危害的存在驱动着">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复杂系统是如何失效的">
+<meta property="og:url" content="http://firezyz.github.io/2017/06/02/复杂系统是如何失效的/index.html">
+<meta property="og:site_name" content="卡 · 求索">
+<meta property="og:description" content="原文地址http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf
+复杂系统本质上是有危险的系统所有引发人们关注的系统(例如交通运输系统,医疗保健系统,发电系统)就其本身的属性而言都有内在且不可避免的危险.危险暴露的频率有时候会发生变化,但系统中所涉及的过程本身就是固有且不可约减的危害.这些危害的存在驱动着">
+<meta property="og:updated_time" content="2017-06-02T05:10:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="复杂系统是如何失效的">
+<meta name="twitter:description" content="原文地址http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf
+复杂系统本质上是有危险的系统所有引发人们关注的系统(例如交通运输系统,医疗保健系统,发电系统)就其本身的属性而言都有内在且不可避免的危险.危险暴露的频率有时候会发生变化,但系统中所涉及的过程本身就是固有且不可约减的危害.这些危害的存在驱动着">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6260308311132866000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://firezyz.github.io/2017/06/02/复杂系统是如何失效的/"/>
+
+  <title> 复杂系统是如何失效的 | 卡 · 求索 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b5fb0967f52616474fb50f3f20f76d56";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">卡 · 求索</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吾将上下而求索</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                复杂系统是如何失效的
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-02T13:04:14+08:00" content="2017-06-02">
+              2017-06-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/02/复杂系统是如何失效的/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/02/复杂系统是如何失效的/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h1><p><a href="http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf" target="_blank" rel="external">http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf</a></p>
+<h1 id="复杂系统本质上是有危险的系统"><a href="#复杂系统本质上是有危险的系统" class="headerlink" title="复杂系统本质上是有危险的系统"></a>复杂系统本质上是有危险的系统</h1><p>所有引发人们关注的系统(例如交通运输系统,医疗保健系统,发电系统)就其本身的属性而言都有内在且不可避免的危险.危险暴露的频率有时候会发生变化,但系统中所涉及的过程本身就是固有且不可约减的危害.这些危害的存在驱动着我们对这些系统的危害进行防护.</p>
+<h1 id="复杂系统能够成功抵抗失效"><a href="#复杂系统能够成功抵抗失效" class="headerlink" title="复杂系统能够成功抵抗失效"></a>复杂系统能够成功抵抗失效</h1><p>故障的严重后果推进了我们建立多层的故障规避措施.这些防御措施包括熟知的技术部分(例如备份系统,设备的“安全”特征)和人员部分(例如培训,知识), 还包括一些整理成文的规避措施(例如规章制度,认证,工作守则,团队训练).这些措施的效果是提供了一系列规避事故的保护.</p>
+<h1 id="灾难需要多次故障-单点故障是不够的"><a href="#灾难需要多次故障-单点故障是不够的" class="headerlink" title="灾难需要多次故障 - 单点故障是不够的"></a>灾难需要多次故障 - 单点故障是不够的</h1><p>因为多重保护是生效的,所以系统操作通常是成功的.明显的灾难性故障在起初发生时候通常是比较小的,但是很明显的无害小问题会造成系统性意外情况的出现.这些小故障都是导致灾难的必要条件,但逐步累积到一定量级才足以产生灾难性故障.换句话说,除了明显暴露出来的系统事故,其实还存在更多的失败的可能.大部分的初期失效都会被预先设计的系统安全组件封锁.操作层面的问题几乎都会被系统的维护人员规避掉.</p>
+<a id="more"></a>
+<h1 id="复杂系统包含了不断变化的潜在故障混合物"><a href="#复杂系统包含了不断变化的潜在故障混合物" class="headerlink" title="复杂系统包含了不断变化的潜在故障混合物"></a>复杂系统包含了不断变化的潜在故障混合物</h1><p>系统的复杂性使得它们即使有多个缺陷,也可以正常运行.因为这些问题单独存在不足以造成故障,以至于在运行中被认为是故障的次要因素.之所以没有事前消除所有的潜在故障,主要受到经济成本的限制,以及事前很难猜到这种故障是怎么造成最后的事故的.同时,由于技术更替,工作组织的变化以及为了消除故障所做的一些工作,也会导致故障的原因不断在变化.</p>
+<h1 id="复杂系统有降级模式"><a href="#复杂系统有降级模式" class="headerlink" title="复杂系统有降级模式"></a>复杂系统有降级模式</h1><p>前一点的推论是,复杂系统可能已经是支离破碎的.系统尽管存在很多缺陷,但是因为系统存在各种各样的维护的补丁,所以系统仍然可以继续运作.故障复盘之后,几乎总能发现该系统有一个“原始事故”的历史.在事故发生之前,这些不断恶化的问题应该已经被争论好多次了.系统操作是组件(组织,人力,技术)出问题并被不断更换的一种动态平衡.</p>
+<h1 id="灾难总是触手可及"><a href="#灾难总是触手可及" class="headerlink" title="灾难总是触手可及"></a>灾难总是触手可及</h1><p>复杂系统具有灾难性故障的隐患.人类从业人员几乎总是紧密接触这些潜在的故障 - 灾难可以在任何时间和几乎任何地方发生.灾难性后果的隐患是复杂系统的标志.消除这种灾难性失败的可能性是不可能的;这种失败的隐患始终以系统本身的性质存在.</p>
+<h1 id="事故后-发生事故的根本原因是“基础性”错误"><a href="#事故后-发生事故的根本原因是“基础性”错误" class="headerlink" title="事故后,发生事故的根本原因是“基础性”错误"></a>事故后,发生事故的根本原因是“基础性”错误</h1><p>由于明显的失效是有多重失效累积而成,因此并不存在孤立的造成事故的原因.多个因素都对事故的发生造成影响.每一个”先天性不足”本身就可以造成事故的发生.只有多个失效累积在一起才足以造成事故.的确,造成事故的原因之间是有关联的,多种不同的情况叠加在一起会引发事故.因此不存在孤立的造成事故出现的根本原因是完全有可能的.在这些推论的基础上,我们对根本原因的评估并不反映出失效属性的技术理解,这些评估仅仅反映的是造成这些事故的社会原因和文化原因.</p>
+<h1 id="事后事故分析是有偏差的"><a href="#事后事故分析是有偏差的" class="headerlink" title="事后事故分析是有偏差的"></a>事后事故分析是有偏差的</h1><p>在任何时间对从业人员而言,了解事故后果实际上比了解事故的原因更为重要.这意味着人为表现的事后回溯事故分析是错误的.对事故的认识能够使事故后观察人员在再次发生因为同样因素而造成的事故之前刷新从业人员对事故的见解.从业人员似乎“本应当知道”引发事故不可避免的因素.“事后诸葛亮”是对事故开展调查的主要障碍,尤其是在涉及专家人为表现时.</p>
+<h1 id="操作员的双重角色-失效的生产者和失效的防御者"><a href="#操作员的双重角色-失效的生产者和失效的防御者" class="headerlink" title="操作员的双重角色:失效的生产者和失效的防御者"></a>操作员的双重角色:失效的生产者和失效的防御者</h1><p>系统从业人员操作系统制造其所期望的产品,这些人员同样需要预先阻止事故的发生.系统的操作是动态的,生产与初期失效可能性之间的平衡不可避免.<br>局外人很少能够了解该角色的双重性.在非事故时间期间强调的是作为生产者的角色.在发生事故之后则强调的是防御失效的角色.不管在哪一时间段,局外人的观点会误解操作员在这两种角色之间稳定的同时参与.</p>
+<h1 id="所有从业人员的行为都是赌博"><a href="#所有从业人员的行为都是赌博" class="headerlink" title="所有从业人员的行为都是赌博"></a>所有从业人员的行为都是赌博</h1><p>在发生事故之后,明显的故障看起来通常是在所难免的,错误的参与者的行为或者参与者故意的行为会使得即将发生的某些故障被忽视.但是所有参与者的行为实际上都是在赌博,也就是在面对不确定结果时候所采取的一些行动.不确定性的程度一直是在不断变化的.参与者的行为就是赌博,并且在事故发生之后表面的更为明显.一般而言,事后分析会将这些赌博性行为视为是非常糟糕的行为.但是与之相反的是,那些成功的结果通常也是赌博性行为的结果,无法被人们广泛领会.</p>
+<h1 id="处于前线位置的行为能够解决所有的歧义"><a href="#处于前线位置的行为能够解决所有的歧义" class="headerlink" title="处于前线位置的行为能够解决所有的歧义"></a>处于前线位置的行为能够解决所有的歧义</h1><p>组织是含糊不清的,在生产目标、资源的有效使用、经济和运营成本以及将高重要性和低重要性事故的可接受风险联系之间通常也是有意为之的.从业人员在系统的前线位置所采取的行为能够解决所有的歧义性。在事故发生之后，从业人员的行为可以视为是“错误”或“违规行为”，但是这些评估带有很大的“事后诸葛亮”的倾向，且忽视了其他的驱动性因素，尤其是生产压力。</p>
+<h1 id="从业人员是复杂系统的一个适应性较强的因素"><a href="#从业人员是复杂系统的一个适应性较强的因素" class="headerlink" title="从业人员是复杂系统的一个适应性较强的因素"></a>从业人员是复杂系统的一个适应性较强的因素</h1><p>从业人员和一线管理人员都会积极适应系统,以实现生产最大化,并将事故的发生降低到最低程度.这种适应通常发生在每时每刻.部分此类适应包括:</p>
+<pre><code>1. 对系统进行调整以降低易损部件发生故障的可能性;
+2. 在预期的高需求领域精选关键资源;
+3. 提供从预期内和预期外故障进行故障恢复的方法;
+4. 建立早期检测系统性能变化的方式,允许合理的削减生产或以其他形式增强系统的弹性.
+</code></pre><h1 id="复杂系统中从业人员的专业知识一直是不断变化的"><a href="#复杂系统中从业人员的专业知识一直是不断变化的" class="headerlink" title="复杂系统中从业人员的专业知识一直是不断变化的"></a>复杂系统中从业人员的专业知识一直是不断变化的</h1><p>在复杂系统的运营和管理过程中需要大量的专业知识.但是由于需要不时更换专业人员,这些专业知识会随着技术的变革发生相应的变化.在任何一种情况下,技能和专业知识的培训和强化本身就是系统功能的一个组成部分.因此,在任何情况下,给定的复杂系统会含有从业人员和实习生所需要的不同层面的专业知识.与专业知识有关的关键问题主要来自于如下两个方面:</p>
+<pre><code>1. 对于异常困难或要求苛刻的产品需求而言利用有限的专业知识作为资源;
+2. 专业知识拓展需求以备未来不时之需.
+</code></pre><h1 id="系统升级会引入新形式的故障"><a href="#系统升级会引入新形式的故障" class="headerlink" title="系统升级会引入新形式的故障"></a>系统升级会引入新形式的故障</h1><p>可靠系统中明显事故降低的发生率可以鼓励变革,尤其是鼓励新技术的使用,以降低低后果和高频失效出现发生频率的重要性.这些变革实际上为新的低频但较高的结果失效提供了机遇.当使用新技术消除人们对系统理解的误区并实现高精度系统性能时,新技术通常会引入新形式的大规模灾难性故障.这种情况并不罕见,这种新的但发生频次较低的灾难会对新技术的淘汰产生更为重要的影响.这些新形式的失效在发生之前几乎无法看到,因此在推定变革有益的特征时需十分小心.由于这些新的且会造成严重后果的事故发生的频率非常低,因此我们可以在事故发生之前对多个系统进行变更,使因技术的引入而产生的失效很难发生.</p>
+<h1 id="限制预防未来事件时效性原因的角度"><a href="#限制预防未来事件时效性原因的角度" class="headerlink" title="限制预防未来事件时效性原因的角度"></a>限制预防未来事件时效性原因的角度</h1><p>“人为失误”的事故后补救措施通常以妨害“引发”事故的活动为基础.这些终端链措施几乎不会降低未来发生事故的可能性.事实上,完全相同的事故的可能性出现的概率是非常低的,因为失效的潜在模式是一直在变化的.除了系统的安全性不断提高之外,事故后补救措施通常也能加强系统的耦合性和复杂度.这种潜在事项数量的增加也是的检测并封锁事故轨迹变得更为困难.</p>
+<h1 id="安全性是系统的特征-而非系统组件的特征"><a href="#安全性是系统的特征-而非系统组件的特征" class="headerlink" title="安全性是系统的特征,而非系统组件的特征"></a>安全性是系统的特征,而非系统组件的特征</h1><p>安全性是系统的突出特征;安全性不会存在于某一个人,设备装置,组织或系统的某一部分中.安全性无法购买,无法加工制造.安全性并不是独立于系统其他组件的一个特征.这意味着,安全性无法像原材料或原料进行操作.在任何系统中,安全性的状态永远是动态的;连续的系统变化确保了危害以及危害的管理也在不断的变化当中.</p>
+<h1 id="人们不断发展安全性"><a href="#人们不断发展安全性" class="headerlink" title="人们不断发展安全性"></a>人们不断发展安全性</h1><p>与系统操作无任何关联的失效是由操作人员在可容忍性能边界之内操作系统实现的.在很大程度上,这些活动是能正常操作的一个组成部分.但是由于系统操作不可能是无故障的,因此人从业人员必须能够适应这种不断变化的状态,并不断强化和完善系统的安全性.这种适应通常相当于从大量的可用资源中选择经过反复预演的资源,但是,有时候这种适应是新方法重新创造的过程或是现有多种方法的组合.</p>
+<h1 id="无故障运行需要故障处理经验"><a href="#无故障运行需要故障处理经验" class="headerlink" title="无故障运行需要故障处理经验"></a>无故障运行需要故障处理经验</h1><p>认识到危害并正确方式运行系统来维持系统可接受的性能需要与失效或故障亲密接触.更为鲁棒的系统性能很有可能是操作人员能够识别并理解失效原因的系统.这是情况系统性能开始退化的开始,这会使预测变得更为困难,或者使操作人员无法简单的从故障中恢复.在本质上是有危害的系统中,操作人员会遇到一些影响到系统总体性能的危害.系统改良过的安全性取决于向操作人员提供经过校准的危害的看法.这同样取决于操作人员的动作能否使系统回到正常的运行状态中.</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>翻译这种专业论文就是一个好不容易能看懂,还要把自己意会的东西表达出来的过程,对于我这种专业英语词汇量不足,辞藻也不华丽的人来说十分的痛苦.<br>对于那些能坚持翻译完,坚持反复翻译一本书的作者们,我致以崇高的敬意.(我翻译这一点就快死掉了)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Firezyz WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag">#翻译</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/24/org-apache-commons-lang3-BooleanUtils/" rel="next" title="org.apache.commons.lang3.BooleanUtils">
+                <i class="fa fa-chevron-left"></i> org.apache.commons.lang3.BooleanUtils
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/06/02/复杂系统是如何失效的/"
+           data-title="复杂系统是如何失效的" data-url="http://firezyz.github.io/2017/06/02/复杂系统是如何失效的/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="Firezyz" />
+          <p class="site-author-name" itemprop="name">Firezyz</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文地址"><span class="nav-number">1.</span> <span class="nav-text">原文地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂系统本质上是有危险的系统"><span class="nav-number">2.</span> <span class="nav-text">复杂系统本质上是有危险的系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂系统能够成功抵抗失效"><span class="nav-number">3.</span> <span class="nav-text">复杂系统能够成功抵抗失效</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#灾难需要多次故障-单点故障是不够的"><span class="nav-number">4.</span> <span class="nav-text">灾难需要多次故障 - 单点故障是不够的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂系统包含了不断变化的潜在故障混合物"><span class="nav-number">5.</span> <span class="nav-text">复杂系统包含了不断变化的潜在故障混合物</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂系统有降级模式"><span class="nav-number">6.</span> <span class="nav-text">复杂系统有降级模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#灾难总是触手可及"><span class="nav-number">7.</span> <span class="nav-text">灾难总是触手可及</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事故后-发生事故的根本原因是“基础性”错误"><span class="nav-number">8.</span> <span class="nav-text">事故后,发生事故的根本原因是“基础性”错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事后事故分析是有偏差的"><span class="nav-number">9.</span> <span class="nav-text">事后事故分析是有偏差的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作员的双重角色-失效的生产者和失效的防御者"><span class="nav-number">10.</span> <span class="nav-text">操作员的双重角色:失效的生产者和失效的防御者</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#所有从业人员的行为都是赌博"><span class="nav-number">11.</span> <span class="nav-text">所有从业人员的行为都是赌博</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#处于前线位置的行为能够解决所有的歧义"><span class="nav-number">12.</span> <span class="nav-text">处于前线位置的行为能够解决所有的歧义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从业人员是复杂系统的一个适应性较强的因素"><span class="nav-number">13.</span> <span class="nav-text">从业人员是复杂系统的一个适应性较强的因素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂系统中从业人员的专业知识一直是不断变化的"><span class="nav-number">14.</span> <span class="nav-text">复杂系统中从业人员的专业知识一直是不断变化的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统升级会引入新形式的故障"><span class="nav-number">15.</span> <span class="nav-text">系统升级会引入新形式的故障</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#限制预防未来事件时效性原因的角度"><span class="nav-number">16.</span> <span class="nav-text">限制预防未来事件时效性原因的角度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全性是系统的特征-而非系统组件的特征"><span class="nav-number">17.</span> <span class="nav-text">安全性是系统的特征,而非系统组件的特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#人们不断发展安全性"><span class="nav-number">18.</span> <span class="nav-text">人们不断发展安全性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无故障运行需要故障处理经验"><span class="nav-number">19.</span> <span class="nav-text">无故障运行需要故障处理经验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">20.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Firezyz</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"firezyz"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

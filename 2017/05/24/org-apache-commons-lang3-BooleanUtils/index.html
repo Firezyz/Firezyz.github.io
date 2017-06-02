@@ -1,0 +1,1161 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="判断public static boolean isTrue(final Boolean bool) {
+    return Boolean.TRUE.equals(bool);
+}
+
+public static boolean isNotTrue(final Boolean bool) {
+    return !isTrue(bool);
+}
+
+public static boolean i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="org.apache.commons.lang3.BooleanUtils">
+<meta property="og:url" content="http://firezyz.github.io/2017/05/24/org-apache-commons-lang3-BooleanUtils/index.html">
+<meta property="og:site_name" content="卡 · 求索">
+<meta property="og:description" content="判断public static boolean isTrue(final Boolean bool) {
+    return Boolean.TRUE.equals(bool);
+}
+
+public static boolean isNotTrue(final Boolean bool) {
+    return !isTrue(bool);
+}
+
+public static boolean i">
+<meta property="og:updated_time" content="2017-05-24T06:13:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="org.apache.commons.lang3.BooleanUtils">
+<meta name="twitter:description" content="判断public static boolean isTrue(final Boolean bool) {
+    return Boolean.TRUE.equals(bool);
+}
+
+public static boolean isNotTrue(final Boolean bool) {
+    return !isTrue(bool);
+}
+
+public static boolean i">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6260308311132866000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://firezyz.github.io/2017/05/24/org-apache-commons-lang3-BooleanUtils/"/>
+
+  <title> org.apache.commons.lang3.BooleanUtils | 卡 · 求索 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b5fb0967f52616474fb50f3f20f76d56";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">卡 · 求索</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吾将上下而求索</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                org.apache.commons.lang3.BooleanUtils
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-24T13:51:23+08:00" content="2017-05-24">
+              2017-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/24/org-apache-commons-lang3-BooleanUtils/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/24/org-apache-commons-lang3-BooleanUtils/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h2><pre><code>public static boolean isTrue(final Boolean bool) {
+    return Boolean.TRUE.equals(bool);
+}
+
+public static boolean isNotTrue(final Boolean bool) {
+    return !isTrue(bool);
+}
+
+public static boolean isFalse(final Boolean bool) {
+    return Boolean.FALSE.equals(bool);
+}
+
+public static boolean isNotFalse(final Boolean bool) {
+    return !isFalse(bool);
+}
+</code></pre><a id="more"></a>
+<h2 id="拆箱与装箱"><a href="#拆箱与装箱" class="headerlink" title="拆箱与装箱"></a>拆箱与装箱</h2><h3 id="拆箱"><a href="#拆箱" class="headerlink" title="拆箱"></a>拆箱</h3><pre><code>public static boolean toBoolean(final Boolean bool) {
+    return bool != null &amp;&amp; bool.booleanValue();
+}
+
+public static boolean toBooleanDefaultIfNull(final Boolean bool, final boolean valueIfNull) {
+    if (bool == null) {
+        return valueIfNull;
+    }
+    return bool.booleanValue();
+}
+</code></pre><p>可以指定如果对象为null的默认值</p>
+<h2 id="整型与布尔"><a href="#整型与布尔" class="headerlink" title="整型与布尔"></a>整型与布尔</h2><h3 id="整型转布尔"><a href="#整型转布尔" class="headerlink" title="整型转布尔"></a>整型转布尔</h3><pre><code>public static boolean toBoolean(final int value) {
+    return value != 0;
+}
+
+public static Boolean toBooleanObject(final int value) {
+    return value == 0 ? Boolean.FALSE : Boolean.TRUE;
+}
+
+public static Boolean toBooleanObject(final Integer value) {
+    if (value == null) {
+        return null;
+    }
+    return value.intValue() == 0 ? Boolean.FALSE : Boolean.TRUE;
+}
+
+public static boolean toBoolean(final int value, final int trueValue, final int falseValue) {
+    if (value == trueValue) {
+        return true;
+    }
+    if (value == falseValue) {
+        return false;
+    }
+    // no match
+    throw new IllegalArgumentException(&quot;The Integer did not match either specified value&quot;);
+}
+</code></pre><p>可以分别指定true和false的int值</p>
+<pre><code>public static boolean toBoolean(final Integer value, final Integer trueValue, final Integer falseValue) {
+    if (value == null) {
+        if (trueValue == null) {
+            return true;
+        }
+        if (falseValue == null) {
+            return false;
+        }
+    } else if (value.equals(trueValue)) {
+        return true;
+    } else if (value.equals(falseValue)) {
+        return false;
+    }
+    // no match
+    throw new IllegalArgumentException(&quot;The Integer did not match either specified value&quot;);
+}
+
+public static Boolean toBooleanObject(final int value, final int trueValue, final int falseValue, final int nullValue) {
+    if (value == trueValue) {
+        return Boolean.TRUE;
+    }
+    if (value == falseValue) {
+        return Boolean.FALSE;
+    }
+    if (value == nullValue) {
+        return null;
+    }
+    // no match
+    throw new IllegalArgumentException(&quot;The Integer did not match any specified value&quot;);
+}
+
+public static Boolean toBooleanObject(final Integer value, final Integer trueValue, final Integer falseValue, final Integer nullValue) {
+    if (value == null) {
+        if (trueValue == null) {
+            return Boolean.TRUE;
+        }
+        if (falseValue == null) {
+            return Boolean.FALSE;
+        }
+        if (nullValue == null) {
+            return null;
+        }
+    } else if (value.equals(trueValue)) {
+        return Boolean.TRUE;
+    } else if (value.equals(falseValue)) {
+        return Boolean.FALSE;
+    } else if (value.equals(nullValue)) {
+        return null;
+    }
+    // no match
+    throw new IllegalArgumentException(&quot;The Integer did not match any specified value&quot;);
+}
+</code></pre><p>可以指定true,false,null的各个int值</p>
+<h3 id="布尔转整型"><a href="#布尔转整型" class="headerlink" title="布尔转整型"></a>布尔转整型</h3><pre><code>public static int toInteger(final boolean bool) {
+    return bool ? 1 : 0;
+}
+
+public static Integer toIntegerObject(final boolean bool) {
+    return bool ? NumberUtils.INTEGER_ONE : NumberUtils.INTEGER_ZERO;
+}
+
+public static Integer toIntegerObject(final Boolean bool) {
+    if (bool == null) {
+        return null;
+    }
+    return bool.booleanValue() ? NumberUtils.INTEGER_ONE : NumberUtils.INTEGER_ZERO;
+}
+
+public static int toInteger(final boolean bool, final int trueValue, final int falseValue) {
+    return bool ? trueValue : falseValue;
+}
+
+public static int toInteger(final Boolean bool, final int trueValue, final int falseValue, final int nullValue) {
+    if (bool == null) {
+        return nullValue;
+    }
+    return bool.booleanValue() ? trueValue : falseValue;
+}
+
+public static Integer toIntegerObject(final boolean bool, final Integer trueValue, final Integer falseValue) {
+    return bool ? trueValue : falseValue;
+}
+
+public static Integer toIntegerObject(final Boolean bool, final Integer trueValue, final Integer falseValue, final Integer nullValue) {
+    if (bool == null) {
+        return nullValue;
+    }
+    return bool.booleanValue() ? trueValue : falseValue;
+}
+</code></pre><h2 id="字符串和布尔型"><a href="#字符串和布尔型" class="headerlink" title="字符串和布尔型"></a>字符串和布尔型</h2><pre><code>*   BooleanUtils.toBooleanObject(null)    = null
+*   BooleanUtils.toBooleanObject(&quot;true&quot;)  = Boolean.TRUE
+*   BooleanUtils.toBooleanObject(&quot;T&quot;)     = Boolean.TRUE // i.e. T[RUE]
+*   BooleanUtils.toBooleanObject(&quot;false&quot;) = Boolean.FALSE
+*   BooleanUtils.toBooleanObject(&quot;f&quot;)     = Boolean.FALSE // i.e. f[alse]
+*   BooleanUtils.toBooleanObject(&quot;No&quot;)    = Boolean.FALSE
+*   BooleanUtils.toBooleanObject(&quot;n&quot;)     = Boolean.FALSE // i.e. n[o]
+*   BooleanUtils.toBooleanObject(&quot;on&quot;)    = Boolean.TRUE
+*   BooleanUtils.toBooleanObject(&quot;ON&quot;)    = Boolean.TRUE
+*   BooleanUtils.toBooleanObject(&quot;off&quot;)   = Boolean.FALSE
+*   BooleanUtils.toBooleanObject(&quot;oFf&quot;)   = Boolean.FALSE
+*   BooleanUtils.toBooleanObject(&quot;yes&quot;)   = Boolean.TRUE
+*   BooleanUtils.toBooleanObject(&quot;Y&quot;)     = Boolean.TRUE // i.e. Y[ES]
+*   BooleanUtils.toBooleanObject(&quot;blue&quot;)  = null
+*   BooleanUtils.toBooleanObject(&quot;true &quot;) = null // trailing space (too long)
+*   BooleanUtils.toBooleanObject(&quot;ono&quot;)   = null // does not match on or no
+</code></pre><h3 id="字符串转布尔型"><a href="#字符串转布尔型" class="headerlink" title="字符串转布尔型"></a>字符串转布尔型</h3><pre><code>public static Boolean toBooleanObject(final String str) {
+    // Previously used equalsIgnoreCase, which was fast for interned &apos;true&apos;.
+    // Non interned &apos;true&apos; matched 15 times slower.
+    //
+    // Optimisation provides same performance as before for interned &apos;true&apos;.
+    // Similar performance for null, &apos;false&apos;, and other strings not length 2/3/4.
+    // &apos;true&apos;/&apos;TRUE&apos; match 4 times slower, &apos;tRUE&apos;/&apos;True&apos; 7 times slower.
+    if (str == &quot;true&quot;) {
+        return Boolean.TRUE;
+    }
+    if (str == null) {
+        return null;
+    }
+    switch (str.length()) {
+        case 1: {
+            final char ch0 = str.charAt(0);
+            if (ch0 == &apos;y&apos; || ch0 == &apos;Y&apos; ||
+                ch0 == &apos;t&apos; || ch0 == &apos;T&apos;) {
+                return Boolean.TRUE;
+            }
+            if (ch0 == &apos;n&apos; || ch0 == &apos;N&apos; ||
+                ch0 == &apos;f&apos; || ch0 == &apos;F&apos;) {
+                return Boolean.FALSE;
+            }
+            break;
+        }
+        case 2: {
+            final char ch0 = str.charAt(0);
+            final char ch1 = str.charAt(1);
+            if ((ch0 == &apos;o&apos; || ch0 == &apos;O&apos;) &amp;&amp;
+                (ch1 == &apos;n&apos; || ch1 == &apos;N&apos;) ) {
+                return Boolean.TRUE;
+            }
+            if ((ch0 == &apos;n&apos; || ch0 == &apos;N&apos;) &amp;&amp;
+                (ch1 == &apos;o&apos; || ch1 == &apos;O&apos;) ) {
+                return Boolean.FALSE;
+            }
+            break;
+        }
+        case 3: {
+            final char ch0 = str.charAt(0);
+            final char ch1 = str.charAt(1);
+            final char ch2 = str.charAt(2);
+            if ((ch0 == &apos;y&apos; || ch0 == &apos;Y&apos;) &amp;&amp;
+                (ch1 == &apos;e&apos; || ch1 == &apos;E&apos;) &amp;&amp;
+                (ch2 == &apos;s&apos; || ch2 == &apos;S&apos;) ) {
+                return Boolean.TRUE;
+            }
+            if ((ch0 == &apos;o&apos; || ch0 == &apos;O&apos;) &amp;&amp;
+                (ch1 == &apos;f&apos; || ch1 == &apos;F&apos;) &amp;&amp;
+                (ch2 == &apos;f&apos; || ch2 == &apos;F&apos;) ) {
+                return Boolean.FALSE;
+            }
+            break;
+        }
+        case 4: {
+            final char ch0 = str.charAt(0);
+            final char ch1 = str.charAt(1);
+            final char ch2 = str.charAt(2);
+            final char ch3 = str.charAt(3);
+            if ((ch0 == &apos;t&apos; || ch0 == &apos;T&apos;) &amp;&amp;
+                (ch1 == &apos;r&apos; || ch1 == &apos;R&apos;) &amp;&amp;
+                (ch2 == &apos;u&apos; || ch2 == &apos;U&apos;) &amp;&amp;
+                (ch3 == &apos;e&apos; || ch3 == &apos;E&apos;) ) {
+                return Boolean.TRUE;
+            }
+            break;
+        }
+        case 5: {
+            final char ch0 = str.charAt(0);
+            final char ch1 = str.charAt(1);
+            final char ch2 = str.charAt(2);
+            final char ch3 = str.charAt(3);
+            final char ch4 = str.charAt(4);
+            if ((ch0 == &apos;f&apos; || ch0 == &apos;F&apos;) &amp;&amp;
+                (ch1 == &apos;a&apos; || ch1 == &apos;A&apos;) &amp;&amp;
+                (ch2 == &apos;l&apos; || ch2 == &apos;L&apos;) &amp;&amp;
+                (ch3 == &apos;s&apos; || ch3 == &apos;S&apos;) &amp;&amp;
+                (ch4 == &apos;e&apos; || ch4 == &apos;E&apos;) ) {
+                return Boolean.FALSE;
+            }
+            break;
+        }
+    default:
+        break;
+    }
+
+    return null;
+}
+
+public static Boolean toBooleanObject(final String str, final String trueString, final String falseString, final String nullString) {
+    if (str == null) {
+        if (trueString == null) {
+            return Boolean.TRUE;
+        }
+        if (falseString == null) {
+            return Boolean.FALSE;
+        }
+        if (nullString == null) {
+            return null;
+        }
+    } else if (str.equals(trueString)) {
+        return Boolean.TRUE;
+    } else if (str.equals(falseString)) {
+        return Boolean.FALSE;
+    } else if (str.equals(nullString)) {
+        return null;
+    }
+    // no match
+    throw new IllegalArgumentException(&quot;The String did not match any specified value&quot;);
+}
+</code></pre><p>举例</p>
+<pre><code>*   BooleanUtils.toBoolean(null)    = false
+*   BooleanUtils.toBoolean(&quot;true&quot;)  = true
+*   BooleanUtils.toBoolean(&quot;TRUE&quot;)  = true
+*   BooleanUtils.toBoolean(&quot;tRUe&quot;)  = true
+*   BooleanUtils.toBoolean(&quot;on&quot;)    = true
+*   BooleanUtils.toBoolean(&quot;yes&quot;)   = true
+*   BooleanUtils.toBoolean(&quot;false&quot;) = false
+*   BooleanUtils.toBoolean(&quot;x gti&quot;) = false
+*   BooleanUtils.toBooleanObject(&quot;y&quot;) = true
+*   BooleanUtils.toBooleanObject(&quot;n&quot;) = false
+*   BooleanUtils.toBooleanObject(&quot;t&quot;) = true
+*   BooleanUtils.toBooleanObject(&quot;f&quot;) = false 
+</code></pre><p>代码</p>
+<pre><code> public static boolean toBoolean(final String str) {
+    return toBooleanObject(str) == Boolean.TRUE;
+}
+
+public static boolean toBoolean(final String str, final String trueString, final String falseString) {
+    if (str == trueString) {
+        return true;
+    } else if (str == falseString) {
+        return false;
+    } else if (str != null) {
+        if (str.equals(trueString)) {
+            return true;
+        } else if (str.equals(falseString)) {
+            return false;
+        }
+    }
+    // no match
+    throw new IllegalArgumentException(&quot;The String did not match either specified value&quot;);
+}
+</code></pre><h3 id="布尔型转字符串"><a href="#布尔型转字符串" class="headerlink" title="布尔型转字符串"></a>布尔型转字符串</h3><pre><code>*   BooleanUtils.toStringTrueFalse(Boolean.TRUE)  = &quot;true&quot;
+*   BooleanUtils.toStringTrueFalse(Boolean.FALSE) = &quot;false&quot;
+*   BooleanUtils.toStringTrueFalse(null)          = null;
+</code></pre><p>代码</p>
+<pre><code>public static String toStringTrueFalse(final Boolean bool) {
+    return toString(bool, &quot;true&quot;, &quot;false&quot;, null);
+}
+
+    public static String toStringOnOff(final Boolean bool) {
+    return toString(bool, &quot;on&quot;, &quot;off&quot;, null);
+}
+
+public static String toStringYesNo(final Boolean bool) {
+    return toString(bool, &quot;yes&quot;, &quot;no&quot;, null);
+}
+
+public static String toString(final Boolean bool, final String trueString, final String falseString, final String nullString) {
+    if (bool == null) {
+        return nullString;
+    }
+    return bool.booleanValue() ? trueString : falseString;
+}
+
+public static String toStringTrueFalse(final boolean bool) {
+    return toString(bool, &quot;true&quot;, &quot;false&quot;);
+}
+
+public static String toStringOnOff(final boolean bool) {
+    return toString(bool, &quot;on&quot;, &quot;off&quot;);
+}
+
+public static String toStringYesNo(final boolean bool) {
+    return toString(bool, &quot;yes&quot;, &quot;no&quot;);
+}
+
+public static String toString(final boolean bool, final String trueString, final String falseString) {
+    return bool ? trueString : falseString;
+}
+</code></pre><h2 id="逻辑操作"><a href="#逻辑操作" class="headerlink" title="逻辑操作"></a>逻辑操作</h2><h3 id="与"><a href="#与" class="headerlink" title="与"></a>与</h3><pre><code>public static boolean and(final boolean... array) {
+    // Validates input
+    if (array == null) {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+    if (array.length == 0) {
+        throw new IllegalArgumentException(&quot;Array is empty&quot;);
+    }
+    for (final boolean element : array) {
+        if (!element) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public static Boolean and(final Boolean... array) {
+    if (array == null) {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+    if (array.length == 0) {
+        throw new IllegalArgumentException(&quot;Array is empty&quot;);
+    }
+    try {
+        final boolean[] primitive = ArrayUtils.toPrimitive(array);
+        return and(primitive) ? Boolean.TRUE : Boolean.FALSE;
+    } catch (final NullPointerException ex) {
+        throw new IllegalArgumentException(&quot;The array must not contain any null elements&quot;);
+    }
+}
+</code></pre><h3 id="或"><a href="#或" class="headerlink" title="或"></a>或</h3><pre><code>public static boolean or(final boolean... array) {
+    // Validates input
+    if (array == null) {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+    if (array.length == 0) {
+        throw new IllegalArgumentException(&quot;Array is empty&quot;);
+    }
+    for (final boolean element : array) {
+        if (element) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public static Boolean or(final Boolean... array) {
+    if (array == null) {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+    if (array.length == 0) {
+        throw new IllegalArgumentException(&quot;Array is empty&quot;);
+    }
+    try {
+        final boolean[] primitive = ArrayUtils.toPrimitive(array);
+        return or(primitive) ? Boolean.TRUE : Boolean.FALSE;
+    } catch (final NullPointerException ex) {
+        throw new IllegalArgumentException(&quot;The array must not contain any null elements&quot;);
+    }
+}
+</code></pre><h3 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h3><pre><code>public static boolean xor(final boolean... array) {
+    // Validates input
+    if (array == null) {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+    if (array.length == 0) {
+        throw new IllegalArgumentException(&quot;Array is empty&quot;);
+    }
+
+    // false if the neutral element of the xor operator
+    boolean result = false;
+    for (final boolean element : array) {
+        result ^= element;
+    }
+
+    return result;
+}
+
+public static Boolean xor(final Boolean... array) {
+    if (array == null) {
+        throw new IllegalArgumentException(&quot;The Array must not be null&quot;);
+    }
+    if (array.length == 0) {
+        throw new IllegalArgumentException(&quot;Array is empty&quot;);
+    }
+    try {
+        final boolean[] primitive = ArrayUtils.toPrimitive(array);
+        return xor(primitive) ? Boolean.TRUE : Boolean.FALSE;
+    } catch (final NullPointerException ex) {
+        throw new IllegalArgumentException(&quot;The array must not contain any null elements&quot;);
+    }
+}
+</code></pre><h3 id="非"><a href="#非" class="headerlink" title="非"></a>非</h3><pre><code>public static Boolean negate(final Boolean bool) {
+    if (bool == null) {
+        return null;
+    }
+    return bool.booleanValue() ? Boolean.FALSE : Boolean.TRUE;
+}
+</code></pre><h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><pre><code>public static int compare(boolean x, boolean y) {
+    if (x == y) {
+        return 0;
+    }
+    return x ? 1 : -1;
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Firezyz WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/22/org.apache.commons.lang3.ArrayUtils/" rel="next" title="org.apache.commons.lang3.ArrayUtils">
+                <i class="fa fa-chevron-left"></i> org.apache.commons.lang3.ArrayUtils
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/02/复杂系统是如何失效的/" rel="prev" title="复杂系统是如何失效的">
+                复杂系统是如何失效的 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/24/org-apache-commons-lang3-BooleanUtils/"
+           data-title="org.apache.commons.lang3.BooleanUtils" data-url="http://firezyz.github.io/2017/05/24/org-apache-commons-lang3-BooleanUtils/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="Firezyz" />
+          <p class="site-author-name" itemprop="name">Firezyz</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#判断"><span class="nav-number">1.</span> <span class="nav-text">判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拆箱与装箱"><span class="nav-number">2.</span> <span class="nav-text">拆箱与装箱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拆箱"><span class="nav-number">2.1.</span> <span class="nav-text">拆箱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整型与布尔"><span class="nav-number">3.</span> <span class="nav-text">整型与布尔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整型转布尔"><span class="nav-number">3.1.</span> <span class="nav-text">整型转布尔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔转整型"><span class="nav-number">3.2.</span> <span class="nav-text">布尔转整型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串和布尔型"><span class="nav-number">4.</span> <span class="nav-text">字符串和布尔型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串转布尔型"><span class="nav-number">4.1.</span> <span class="nav-text">字符串转布尔型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔型转字符串"><span class="nav-number">4.2.</span> <span class="nav-text">布尔型转字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑操作"><span class="nav-number">5.</span> <span class="nav-text">逻辑操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与"><span class="nav-number">5.1.</span> <span class="nav-text">与</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#或"><span class="nav-number">5.2.</span> <span class="nav-text">或</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异或"><span class="nav-number">5.3.</span> <span class="nav-text">异或</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非"><span class="nav-number">5.4.</span> <span class="nav-text">非</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较"><span class="nav-number">6.</span> <span class="nav-text">比较</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Firezyz</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"firezyz"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
